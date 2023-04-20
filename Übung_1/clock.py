@@ -62,6 +62,8 @@ class Clock:
         else:
             return False
 
+# divmod???
+
 
 c = Clock(10,30)
 c.set_time(15,45)
