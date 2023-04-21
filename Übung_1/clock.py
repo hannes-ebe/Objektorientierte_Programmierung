@@ -9,7 +9,7 @@ class Clock:
             self.hours = hours
             self.minutes = minutes
         else:
-            print('Unngültige Startzeit. Uhrzeit wird auf 00:00 Uhr gesetzt.')
+            # print('Unngültige Startzeit. Uhrzeit wird auf 00:00 Uhr gesetzt.')
             self.hours = 0
             self.minutes = 0
 
@@ -23,7 +23,7 @@ class Clock:
             self.hours = hours
             self.minutes = minutes
         else:
-            print('Unngültige Uhrzeit. Uhrzeit wird auf 00:00 Uhr gesetzt.')
+            # print('Unngültige Uhrzeit. Uhrzeit wird auf 00:00 Uhr gesetzt.')
             self.hours = 0
             self.minutes = 0
 
