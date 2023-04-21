@@ -29,24 +29,17 @@ class Clock:
 
     def add_minutes(self,minutes):
         '''Fügt die angegebene Anzahl an Minuten zur aktuellen Zeit hinzu. Negative Eingaben sind möglich. Das Ergebnis muss wieder eine gültige Uhrzeit sein.'''
-        if (0 <= self.minutes + minutes) and (self.minutes + minutes < 60):
-            self.minutes += minutes
-        # Um wie viele Stunden ist neue Minutenzeit verschoben??? Muss doch auch schöner gehen...
-        elif 0 < minutes:
-            # Berechne um wie viele Stunden und Minuten ich verschieben muss
-            dHH = minutes // 60 # Ganzzahliges Teilen für Stunden, die addiert werden müssen
-            dmm = minutes % 60  # Modulo für Minuten, die addiert werden müssen
-            # hier addieren, if-Abfragen ob Werte für Stunde und Minute noch gültig sind.
-            self.hours += dHH
-            self.minutes += dmm
-            if self.check_for_valid_time(self.hours+dHH,self.minutes+dmm):
-                pass
-            elif 24 <= self.hours:
-                pass  # Hier ausrechnen, wie ich anpassen muss...
+        t = self.hours * 60 + self.minutes + minutes    # Rechne aktuelle Zeit in Minuten seit 00:00 Uhr um und addiere die entsprechenden Minuten.
+        h = t // 60                                     # Ganzzahliges Teilen für Stunden
+        m = t % 60                                      # Modulo (Rest) für Minuten
+        h = h % 24                                      # Modulo (Rest) für Stunden auf  der Uhr (alle 24h wiederholt sich Uhrzeit)
+
+        self.minutes = m
+        self.hours = h
 
     def __str__(self):
         '''Gebe Zeit als string im Format HH:mm zurück. Bei Stunden und Minuten kleiner 10 werden führende Nullen ergänzt.
-        Ereiche dies, indem auf String-Länge getestet wird.'''
+        Erreiche dies, indem auf String-Länge getestet wird.'''
         HH = str(self.hours)
         mm = str(self.minutes)
         if len(HH) < 2:
@@ -62,19 +55,26 @@ class Clock:
         else:
             return False
 
-# divmod???
-
 
 c = Clock(10,30)
+print(c)
 c.set_time(15,45)
 print(c)
 c.add_minutes(10)
 print(c)
 c.add_minutes(-6)
 print(c)
+c.add_minutes(-960)
+print(c)
+c.add_minutes(+63)
+print(c)
+c.set_time(30,8)
+c.set_time(8,70)
+c.set_time(99,99)
 print('Gerade Stunde?: ',c.is_even_hour())
 
 
-# c2 = Clock(66,4)
-# c2.set_time(4,4)
-# print(c2)
+c2 = Clock(66,4)
+print(c2)
+c2.set_time(4,4)
+print(c2)
