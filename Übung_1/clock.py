@@ -32,7 +32,7 @@ class Clock:
         t = self.hours * 60 + self.minutes + minutes    # Rechne aktuelle Zeit in Minuten seit 00:00 Uhr um und addiere die entsprechenden Minuten.
         h = t // 60                                     # Ganzzahliges Teilen für Stunden
         m = t % 60                                      # Modulo (Rest) für Minuten
-        h = h % 24                                      # Modulo (Rest) für Stunden auf  der Uhr (alle 24h wiederholt sich Uhrzeit)
+        h = h % 24                                      # Modulo (Rest) für Stunden auf der Uhr (alle 24h wiederholt sich Uhrzeit)
 
         self.minutes = m
         self.hours = h
