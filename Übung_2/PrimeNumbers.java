@@ -1,4 +1,4 @@
-class PrimeNumbers {
+public class PrimeNumbers {
     public static void main(String[] args) {
         // Primzahlen haben zwei natürliche Teiler. Einer davon ist die 1 und einer die Zahl selbst.
         String x;
