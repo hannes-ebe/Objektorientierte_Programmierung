@@ -115,4 +115,18 @@ public class Fraction {
             return 0;
         }
     }
+    public static void swap(Fraction a, Fraction b) {
+        /*
+        Fraction c = a;
+        a = b;
+        b = c;
+        */
+        int ayuda = a.getNumerator();
+        a.setNumerator(b.getNumerator());
+        b.setNumerator(ayuda);
+
+        ayuda = a.getDenominator();
+        a.setDenominator(b.getDenominator());
+        b.setDenominator(ayuda);
+    }
 }

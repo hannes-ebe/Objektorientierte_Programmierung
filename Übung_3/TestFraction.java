@@ -1,5 +1,6 @@
 public class TestFraction {
     public static void main(String[] args) {
+        /*
         Fraction f1 = new Fraction(1,2);
         Fraction f2 = new Fraction(3,4);
         System.out.println("Zähler f1: " + f1.getNumerator());
@@ -49,5 +50,13 @@ public class TestFraction {
         System.out.println(f.getNumerator() + "/" + f.getDenominator());
         f.shorten();
         System.out.println(f.getNumerator() + "/" + f.getDenominator());
+        */
+        Fraction a = new Fraction(1,2);
+        Fraction b = new Fraction(1,4);
+        System.out.println(a);
+        System.out.println(b);
+        Fraction.swap(a,b);
+        System.out.println(a);
+        System.out.println(b);
     }
 }
