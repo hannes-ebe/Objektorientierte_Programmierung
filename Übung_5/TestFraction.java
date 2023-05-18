@@ -1,3 +1,4 @@
+import java.util.Random;
 public class TestFraction {
     public static void main(String[] args) {
         /*
@@ -50,7 +51,7 @@ public class TestFraction {
         System.out.println(f.getNumerator() + "/" + f.getDenominator());
         f.shorten();
         System.out.println(f.getNumerator() + "/" + f.getDenominator());
-        */
+
         Fraction a = new Fraction(1,2);
         Fraction b = new Fraction(1,4);
         System.out.println(a);
@@ -58,5 +59,22 @@ public class TestFraction {
         Fraction.mutSwap(a,b);
         System.out.println(a);
         System.out.println(b);
+         */
+        Random random = new Random();
+        Fraction[] list = new Fraction[10];
+        for (int i=0; i<list.length; i++) {
+            int num = random.nextInt(11);  // random integers from 0 to 11-1
+            int den = random.nextInt(11);
+            list[i] = new Fraction(num,den);
+        }
+        System.out.println("Unsorted list:");
+        for (int i=0; i<list.length; i++) {
+            System.out.println(list[i]);
+        }
+        Fraction.sortFractions(list);
+        System.out.println("Sorted list:");
+        for (int j=0; j<list.length; j++) {
+            System.out.println(list[j]);
+        }
     }
 }

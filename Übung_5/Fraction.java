@@ -198,7 +198,18 @@ class Fraction {
         a.setDenominator(b.getDenominator());
         b.setDenominator(ayuda);
     }
+
+    /**
+     * Uses bubblesort algorithm to sort list of fractions
+     * @param list list of fractions to sort
+     */
     public static void sortFractions(Fraction[] list) {
-        //ToDo Welchen Sortieralgorithmus nutzen???
+        for (int n=list.length; n>1; n--) {
+            for (int i=0; i<n-1; i++) {
+                if (list[i].compareTo(list[i+1]) == -1) {
+                    mutSwap(list[i], list[i+1]);
+                }
+            }
+        }
     }
 }
