@@ -1,3 +1,4 @@
+package addressBook;
 /** A class to implement a contact. */
 public class Contact {
     /** Name of the contact. */

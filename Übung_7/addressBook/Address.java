@@ -1,3 +1,4 @@
+package addressBook;
 /** A class to implement an address. */
 public class Address {
     /** Country of address */

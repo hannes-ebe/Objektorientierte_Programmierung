@@ -1,3 +1,4 @@
+package addressBook;
 /** A class to implement a name.*/
 public class Name {
     /** First name of name */
