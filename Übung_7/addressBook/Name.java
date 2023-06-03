@@ -1,6 +1,6 @@
 package addressBook;
 /** A class to implement a name.*/
-public class Name {
+class Name {
     /** First name of name */
     private String firstName;
     /** Last name of name. */
@@ -10,23 +10,23 @@ public class Name {
         this.firstName = firstName;
         this.lastName = lastName;
     }
-    /** Function to get first name. */
+    /** Method to get first name. */
     public String getFirstName() {
         return firstName;
     }
-    /** Function to get last name. */
+    /** Method to get last name. */
     public String getLastName() {
         return lastName;
     }
-    /** Function to set first name. */
+    /** Method to set first name. */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    /** Function to set last name. */
+    /** Method to set last name. */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    /** Function to print a name. */
+    /** Method to print a name. */
     @Override
     public String toString() {
         return firstName + " " + lastName;

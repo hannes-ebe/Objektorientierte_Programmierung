@@ -2,11 +2,13 @@ import addressBook.AddressBook;
 /** Class to test the class AddressBook. */
 public class TestAddressBook {
     public static void main(String[] args) {
-        int numberOfContacts = 3;
-        AddressBook addressBook = new AddressBook(numberOfContacts);
+        AddressBook addressBook = new AddressBook();
+        addressBook.addContact();
+        addressBook.addContact();
         addressBook.addContact();
         addressBook.printContacts();
-        addressBook.search("Christian-Albrechts-Platz");
+        addressBook.search("Tom");
         addressBook.deleteContact();
+        addressBook.printContacts();
     }
 }

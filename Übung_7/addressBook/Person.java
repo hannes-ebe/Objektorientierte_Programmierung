@@ -1,4 +1,9 @@
 package addressBook;
 /** Class to implement a person */
-public class Person extends Contact {
+class Person extends Contact {
+    /** Method to print a person. */
+    @Override
+    public String toString() {
+        return "Person: " + super.toString();
+    }
 }

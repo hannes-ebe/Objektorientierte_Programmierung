@@ -1,29 +1,45 @@
 package addressBook;
 /** A class to implement a contact. */
-public abstract class Contact {
+abstract class Contact {
     /** Name of the contact. */
     private Name name;
     /** Address of the contact. */
-    Address address;
-    /** Function to get the name of the contact. */
-    Name getName() {
+    private Address address;
+    /** Method to get the name of the contact. */
+    private Name getName() {
         return name;
     }
-    /** Function to set the name of the contact. */
+    /** Method to set the name of the contact. */
     void setName(Name name) {
         this.name = name;
     }
-    /** Function to get the address of the contact. */
+    /** Method to get the address of the contact. */
     Address getAddress() {
         return address;
     }
-    /** Function to set the address of the contact. */
+    /** Method to set the address of the contact. */
     void setAddress(Address address) {
         this.address = address;
     }
-    /** Function to print a contact. */
+    /** Method to print a contact. */
     @Override
-    String toString() {
-        return name.toString() + "\n" + address.toString();
+    public String toString() {
+        /* Abfrage, ob name oder address null sind. In diesem Fall soll auch null für sie ausgegeben werden,
+        da die toString-Methode dann nicht funktioniert. */
+        String nameVariable;
+        String addressVariable;
+        if (name == null) {
+            nameVariable = null;
+        }
+        else {
+            nameVariable = name.toString();
+        }
+        if (address == null) {
+            addressVariable = null;
+        }
+        else {
+            addressVariable = address.toString();
+        }
+        return nameVariable + "\nAddress: " + addressVariable;
     }
 }
