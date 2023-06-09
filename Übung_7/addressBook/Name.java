@@ -6,24 +6,24 @@ class Name {
     /** Last name of name. */
     private String lastName;
     /** Constructor for a name */
-    public Name(String firstName, String lastName) {
+    Name(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
     /** Method to get first name. */
-    public String getFirstName() {
+    String getFirstName() {
         return firstName;
     }
     /** Method to get last name. */
-    public String getLastName() {
+    String getLastName() {
         return lastName;
     }
     /** Method to set first name. */
-    public void setFirstName(String firstName) {
+    void setFirstName(String firstName) {
         this.firstName = firstName;
     }
     /** Method to set last name. */
-    public void setLastName(String lastName) {
+    void setLastName(String lastName) {
         this.lastName = lastName;
     }
     /** Method to print a name. */
