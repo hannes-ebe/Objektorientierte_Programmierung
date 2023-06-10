@@ -1,0 +1,36 @@
+addContact:
+	Wahl zwischen Person(0) und Company(1)
+	Person:
+		- Name:	-Vorname->Nachname
+		  	-Falls Vorname "Null", Name leer
+		- Adresse:	-Stadt->Plz(Integer)->Straße->Hausnummer(Integer)
+				-Falls Stadt "Null", Adresse leer
+
+	Company:- Firmenname: 	- Falls "Null" wird leergelassen
+		- Eigentümer: 	-Vorname->Nachname
+		  	      	-Falls Vorname "Null", Name leer
+		- Adresse:	-Stadt->Plz(Integer)->Straße->Hausnummer(Integer)
+				-Falls Stadt "Null", Adresse leer
+
+printContact:
+	Print alle Kontakte in Einfügungsreihenfolge, mit Eintragsnummer
+	("" Variablen aus addContact)
+	Person:
+		Entry "n":
+		Person: "Vorname" "Nachname"
+		Adress: "Plz" "Stadt", "Straße" "Hausnummer"
+
+	Company:
+		Entry "n":
+		Company: "Firmenname"
+		Owner: "Vorname" "Nachname"
+		Adress: "Plz" "Stadt", "Straße" "Hausnummer"
+	Falls ein Adresse oder Name "Null" sind, wird stattdessen null ausgegeben
+
+deleteContact:
+	printContact-> Löschen nach Eintragsnummer(-1 zum abbrechen)-> printContact
+
+searchContact:
+	Sucht als Parameter vorgegebene Zeichenkette in allen Kontakten
+	Durchsucht alle Variablen eines Kontakts
+	Gibt alle Kontakte mit Treffern aus 	
