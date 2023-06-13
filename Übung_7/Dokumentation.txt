@@ -1,5 +1,10 @@
+Dokumentation des package "adressBook" von Pierre Bornfleth und Hannes Ebeling
+
+Nur auf die folgenden Funktionen kann außerhalb des packages zugegriffen werden. Der Rest ist nämlich package-private.
+Lediglich die überschriebenen toString()-Methoden müssen public sein. Sonst läuft der Code nicht.
+
 addContact:
-	Wahl zwischen Person(0) und Company(1)
+	Wahl zwischen Person(1) und Company(2); Adressen und Namen können nur als Ganzes leer gelassen werden.
 	Person:
 		- Name:	-Vorname->Nachname
 		  	-Falls Vorname "Null", Name leer
@@ -13,19 +18,19 @@ addContact:
 				-Falls Stadt "Null", Adresse leer
 
 printContact:
-	Print alle Kontakte in Einfügungsreihenfolge, mit Eintragsnummer
+	Print alle Kontakte in Einfügungsreihenfolge mit Eintragsnummer
 	("" Variablen aus addContact)
 	Person:
 		Entry "n":
 		Person: "Vorname" "Nachname"
-		Adress: "Plz" "Stadt", "Straße" "Hausnummer"
+		Adresse: "Plz" "Stadt", "Straße" "Hausnummer"
 
 	Company:
 		Entry "n":
 		Company: "Firmenname"
 		Owner: "Vorname" "Nachname"
-		Adress: "Plz" "Stadt", "Straße" "Hausnummer"
-	Falls ein Adresse oder Name "Null" sind, wird stattdessen null ausgegeben
+		Adresse: "Plz" "Stadt", "Straße" "Hausnummer"
+	Falls eine Adresse oder Name "Null" sind, wird stattdessen null für das jeweilige Attribut von Contact ausgegeben
 
 deleteContact:
 	printContact-> Löschen nach Eintragsnummer(-1 zum abbrechen)-> printContact
@@ -33,4 +38,44 @@ deleteContact:
 searchContact:
 	Sucht als Parameter vorgegebene Zeichenkette in allen Kontakten
 	Durchsucht alle Variablen eines Kontakts
-	Gibt alle Kontakte mit Treffern aus 	
+	Gibt alle Kontakte mit Treffern aus
+
+Die Funktionalität wird in der Testklasse "TestAdressBook.java" demonstriert. Dort wird jede der geforderten Methoden
+mindestens einmal aufgerufen, um interaktiv alle möglichen Sonderfälle testen zu können.
+Zusätzlich gibt es die Klasse TestContact, um die Klasse Contact zu testen. Der Code der main-Methode ist hier auskommentiert,
+da Contact in der finalen Version abstract ist. Sie ist nur enthalten, da das Testen von Contact ein Teil der Aufgabenstellung war.
+
+
+Klassenstruktur:
+
+Die abstrakte Klasse Contact stellt einen Kontakt in seiner einfachsten Form dar und besteht aus Name und Adresse. Dabei benutzt
+Contact die entsprechenden Klassen Name und Address aus dem Package. Nun gibt es die spezifizierten Kontaktarten Company und Person,
+welche von der abstrakten Klasse Contact erben. Sie stellen dann eine Person oder Firma dar. Da eine Person keine weiteren Attribute
+braucht, wird lediglich die toString-Methode unter Nutzung der toString-Methode aus der Oberklasse modifiziert. In der Klasse Company
+wird neben einer überschriebenen toString-Methode noch ein Attribut Firmenname mit den entsprechenden getter- und setter-Methoden
+hinzugefügt. Der Name entspricht jetzt dem Firmeneigentümer.
+
+
+
+Genutzte IDE:
+
+IntelliJ IDEA 2023.1 (Community Edition)
+Build \#IC-231.8109.175, built on March 28, 2023
+Runtime version: 17.0.6+10-b829.5 amd64
+VM: OpenJDK 64-Bit Server VM by JetBrains s.r.o.
+Windows 11.0
+GC: G1 Young Generation, G1 Old Generation
+Memory: 2018M
+Cores: 8
+
+Kotlin: 231-1.8.20-IJ8109.175
+
+
+
+Genutzte Java-Version:
+
+openjdk version "17.0.6" 2023-01-17 LTS
+OpenJDK Runtime Environment Microsoft-7209853 (build 17.0.6+10-LTS)
+OpenJDK 64-Bit Server VM Microsoft-7209853 (build 17.0.6+10-LTS, mixed mode, sharing)
+
+Zusätzlich zur Dokumentation ist Javadoc beigefügt.

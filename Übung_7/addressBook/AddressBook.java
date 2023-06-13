@@ -11,8 +11,8 @@ public class AddressBook {
     /** Method to add a contact. It can be chosen between adding a person or a company.
      * The parameters have to be entered using the shell.
      * Entering Null instead of entering the first name or the city leaves the entries for
-     * the name or the address empty. It is only possible to leave the address as a whole empty,
-     * not only parts of the address.
+     * the name or the address empty. It is only possible to leave the address or name as a whole empty,
+     * not only parts of the address or name.
      */
     public void addContact() {
         Scanner scanner = new Scanner(System.in);
@@ -161,6 +161,7 @@ public class AddressBook {
                     break;
                 }
                 contacts.remove(index);
+                System.out.println("The following contact has been deleted: "+index);
                 falseInput = false;
             } catch (InputMismatchException e) {
                 System.out.println("The input must be a valid index number or -1 to cancel the operation. Please try again:");
