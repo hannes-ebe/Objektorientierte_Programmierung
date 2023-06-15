@@ -10,7 +10,8 @@ Ziel: unten rechts; Index (width,height)
 In der Klasse World werden die Koordinaten von Start und Ziel als private final Attribute gespeichert und über den
 Konstruktor gesetzt. ConsoleView holt sich die Positionen von Start und Ziel über getter-Methoden und stellt Start
 und Ziel als S (start) und D (destination) dar. Der Spieler, der als Raute dargestellt wird, überlagert stets die
-anderen Symbole in der Konsole. In der GUI ist der Spieler als schwarzes Quadrat mit einem weißen P (player) gekennzeichnet.
+anderen Symbole in der Konsole. In der GUI ist der Spieler als schwarzer Kreis mit einem weißen P (player) gekennzeichnet.
+Start und Ziel sind in der paint-Methode von GraphicView gecodet.
 
 
 
