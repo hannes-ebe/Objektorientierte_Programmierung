@@ -122,11 +122,7 @@ public class World {
 	private void updateViews() {
 		for (int i = 0; i < views.size(); i++) {
 			views.get(i).update(this);
-			// Game is terminated if player reaches destination
-			if (playerX == destinationX && playerX == destinationY) {
-				// Implementieren, dass Spiel neu gestartet werden kann.
-				// Wie beende ich korrekt???
-			}
+			views.get(i).isDestinationReached(this);
 		}
 	}
 

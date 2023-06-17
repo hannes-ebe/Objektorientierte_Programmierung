@@ -2,7 +2,7 @@ package controller;
 import java.awt.Dimension;
 import java.awt.Insets;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import model.World;
 import view.ConsoleView;
@@ -44,6 +44,14 @@ public class Labyrinth {
                 controller.getContentPane().add(gview);
                 // pack() is needed before JFrame size can be calculated.
                 controller.pack();
+
+                // Create a button for restart
+                JButton restart = new JButton("Restart");
+                JPanel panel = new JPanel();
+                // Add button to panel
+                panel.add(restart);
+                // Add button to JFrame
+                controller.getContentPane().add(panel);
 
                 // Calculate size of window by size of insets (titlebar + border) and size of graphical view.
                 Insets insets = controller.getInsets();

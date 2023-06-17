@@ -15,3 +15,9 @@ Start und Ziel sind in der paint-Methode von GraphicView gecodet.
 
 
 
+
+			// Game is terminated if player reaches destination
+			if (playerX == destinationX && playerX == destinationY) {
+				// Implementieren, dass Spiel neu gestartet werden kann.
+				// Wie beende ich korrekt???
+			}
