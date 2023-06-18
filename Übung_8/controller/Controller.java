@@ -5,9 +5,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import model.Direction;
 import model.World;
@@ -21,6 +22,8 @@ public class Controller extends JFrame implements KeyListener, ActionListener, M
 	/** The world that is updated upon every key press. */
 	private World world;
 	private List<View> views;
+	/** Set of buttons registered for the GUI. */
+	private final ArrayList<JButton> buttons = new ArrayList<>();
 
 	/**
 	 * Creates a new instance.
@@ -35,6 +38,7 @@ public class Controller extends JFrame implements KeyListener, ActionListener, M
 		
 		// Listen for key events
 		addKeyListener(this);
+
 		// Listen for mouse events.
 		// Not used in the current implementation.
 		addMouseListener(this);
@@ -79,15 +83,19 @@ public class Controller extends JFrame implements KeyListener, ActionListener, M
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+		/*
+		world.setPlayerX(world.getStartX());
+		world.setPlayerY(world.getStartY());
+		System.out.println("Game restarted.");
+		System.out.println();*/
 	}
+
 	
 	/////////////////// Mouse Events ////////////////////////////////
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -114,4 +122,27 @@ public class Controller extends JFrame implements KeyListener, ActionListener, M
 		
 	}
 
+	///////////////////////////////////////////////////////////////////////////
+	// Button Management for GUI
+
+	public void registerButton(JButton button) {
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				world.setPlayerX(world.getStartX());
+				world.setPlayerY(world.getStartY());
+				System.out.println("Game restarted.");
+				System.out.println();
+			}
+		});
+		buttons.add(button);
+	}
+
+	/**
+	 * Get JButton corresponding to the index.
+	 * @param i index of the JButton.
+	 */
+	public JButton getJButton(int i) {
+		return buttons.get(i);
+	}
 }

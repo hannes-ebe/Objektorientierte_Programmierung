@@ -1,8 +1,12 @@
 package model;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import view.View;
+
+import javax.swing.*;
 
 /**
  * The world is our model. It saves the bare minimum of information required to
@@ -87,6 +91,7 @@ public class World {
 		updateViews();
 	}
 
+
 	///////////////////////////////////////////////////////////////////////////
 	// Player Management
 	
@@ -125,5 +130,4 @@ public class World {
 			views.get(i).isDestinationReached(this);
 		}
 	}
-
 }

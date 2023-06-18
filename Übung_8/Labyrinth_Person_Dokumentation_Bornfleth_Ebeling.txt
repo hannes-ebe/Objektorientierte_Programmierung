@@ -13,7 +13,8 @@ und Ziel als S (start) und D (destination) dar. Der Spieler, der als Raute darge
 anderen Symbole in der Konsole. In der GUI ist der Spieler als schwarzer Kreis mit einem weißen P (player) gekennzeichnet.
 Start und Ziel sind in der paint-Methode von GraphicView gecodet.
 
-
+Neustart des Spiels:
+Zunächst kann das Spiel jederzeit über einen Button in der GUI neugestartet werden.
 
 
 			// Game is terminated if player reaches destination
@@ -21,3 +22,10 @@ Start und Ziel sind in der paint-Methode von GraphicView gecodet.
 				// Implementieren, dass Spiel neu gestartet werden kann.
 				// Wie beende ich korrekt???
 			}
+
+			{
+                                @Override
+                                public Dimension getPreferredSize() {
+                                    return new Dimension(buttonsDimensions.width, buttonsDimensions.height);
+                                }
+                            }
