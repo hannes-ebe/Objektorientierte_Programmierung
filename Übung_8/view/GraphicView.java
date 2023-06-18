@@ -79,10 +79,5 @@ public class GraphicView extends JPanel implements View {
 				(int) (world.getPlayerY() * fieldDimension.height));
 		repaint();
 	}
-
-	@Override
-	public void isDestinationReached(World world) {
-
-	}
 	
 }

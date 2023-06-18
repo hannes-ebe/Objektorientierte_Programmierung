@@ -43,18 +43,4 @@ public class ConsoleView implements View {
 		System.out.println();
 	}
 
-	@Override
-	public void isDestinationReached(World world) {
-		int playerX = world.getPlayerX();
-		int playerY = world.getPlayerY();
-		int destinationX = world.getDestinationX();
-		int destinationY = world.getDestinationY();
-
-		if (playerX == destinationX && playerY == destinationY) {
-			System.out.println("Congratulations! You have reached your destination and won the game.");
-			System.out.println("Press (1) to restart the game or (2) to close the application");
-			System.out.println();
-		}
-	}
-
 }

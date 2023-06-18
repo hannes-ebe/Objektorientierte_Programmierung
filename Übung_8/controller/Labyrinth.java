@@ -1,5 +1,8 @@
 package controller;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.*;
 
@@ -26,8 +29,6 @@ public class Labyrinth {
                 // Size of a field in the graphical view.
                 // field dimensions have been doubled to 50 instead of 25 to get a larger window
                 Dimension fieldDimensions = new Dimension(50, 50);
-                // Size of the buttons on the right of the GUI.
-                Dimension buttonsDimensions = new Dimension((fieldDimensions.width * width)/2, fieldDimensions.height * height);
                 // Dimensions of graphic view.
                 Dimension graphicViewDimensions = new Dimension(width * fieldDimensions.width, height * fieldDimensions.height);
 
@@ -53,23 +54,44 @@ public class Labyrinth {
                 controller.setLayout(null);
                 Insets insets = controller.getInsets();
 
-                controller.add(gview);
+                controller.getContentPane().add(gview);
                 gview.setBounds(insets.left,insets.top,graphicViewDimensions.width,graphicViewDimensions.height);
 
+                // Creating a menu bar
+                JMenuBar menuBar = new JMenuBar();
 
-                // Create a button for restart
-                JButton restart = new JButton("Restart Game");
-                controller.registerButton(restart);
-                JButton difficulty = new JButton(("Change Difficulty"));
-                // Create JPanel with new preferred size
-                JPanel buttonPanel = new JPanel();
-                buttonPanel.setLayout(new GridLayout(0,1));
-                // Add button to panel
-                buttonPanel.add(restart);
-                buttonPanel.add(difficulty);
-                // Add panel to JFrame
-                controller.add(buttonPanel);
-                buttonPanel.setBounds(graphicViewDimensions.width, insets.top, buttonsDimensions.width, buttonsDimensions.height);
+                JMenu menu = new JMenu("Options");
+                menu.add(new JButton(new AbstractAction("Restart Game") {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        controller.restart();
+                        world.updateViews();
+                    }
+                }));
+                menu.add(new JButton(new AbstractAction("  Close Game ") {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        controller.closeApplication();
+                    }
+                }));
+
+                JMenu menu2 = new JMenu("Difficulty");
+                menu2.add(new JButton(new AbstractAction("Easy") {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // TODO Hier die Einstellung der einfachen Schwierigkeit...
+                    }
+                }));
+                menu2.add(new JButton(new AbstractAction("Hard") {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // TODO Hier die Einstellung der schweren Schwierigkeit...
+                    }
+                }));
+
+                menuBar.add(menu);
+                menuBar.add(menu2);
+                controller.setJMenuBar(menuBar);
 
 
                 // pack() is needed before JFrame size can be calculated.
@@ -77,8 +99,8 @@ public class Labyrinth {
 
                 // Calculate size of window by size of insets (titlebar + border) and size of graphical view.
                 insets = controller.getInsets();
-                int windowX = graphicViewDimensions.width + insets.left + insets.right + buttonsDimensions.width;
-                int windowY = graphicViewDimensions.height + insets.bottom + insets.top;
+                int windowX = graphicViewDimensions.width + insets.left + insets.right;
+                int windowY = graphicViewDimensions.height + insets.bottom + insets.top + menuBar.getHeight();
                 Dimension size = new Dimension(windowX, windowY);
                 controller.setSize(size);
                 controller.setMinimumSize(size);

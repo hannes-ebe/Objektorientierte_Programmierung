@@ -123,26 +123,19 @@ public class Controller extends JFrame implements KeyListener, ActionListener, M
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	// Button Management for GUI
-
-	public void registerButton(JButton button) {
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				world.setPlayerX(world.getStartX());
-				world.setPlayerY(world.getStartY());
-				System.out.println("Game restarted.");
-				System.out.println();
-			}
-		});
-		buttons.add(button);
-	}
+	// Useful methods to control application
 
 	/**
-	 * Get JButton corresponding to the index.
-	 * @param i index of the JButton.
+	 * Restart the game.
 	 */
-	public JButton getJButton(int i) {
-		return buttons.get(i);
+	public void restart() {
+		world.setPlayerX(world.getStartX());
+		world.setPlayerY(world.getStartY());
+		System.out.println("Game restarted.");
+		System.out.println();
+	}
+	/** Closes the whole application. */
+	public void closeApplication() {
+		System.exit(0);
 	}
 }

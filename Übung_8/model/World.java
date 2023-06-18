@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -75,8 +76,14 @@ public class World {
 		playerX = Math.max(0, playerX);
 		playerX = Math.min(getWidth() - 1, playerX);
 		this.playerX = playerX;
-		
-		updateViews();
+	}
+	private boolean destinationReached() {
+		if (playerX == destinationX && playerY == destinationY) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public int getPlayerY() {
@@ -87,8 +94,6 @@ public class World {
 		playerY = Math.max(0, playerY);
 		playerY = Math.min(getHeight() - 1, playerY);
 		this.playerY = playerY;
-		
-		updateViews();
 	}
 
 
@@ -105,6 +110,7 @@ public class World {
 		// every direction
 		setPlayerX(getPlayerX() + Direction.getDeltaX(direction));
 		setPlayerY(getPlayerY() + Direction.getDeltaY(direction));
+		updateViews();
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -123,11 +129,53 @@ public class World {
 
 	/**
 	 * Updates all views by calling their {@link View#update(World)} methods.
+	 * Checks whether the destination has been reached.
 	 */
-	private void updateViews() {
+	public void updateViews() {
 		for (int i = 0; i < views.size(); i++) {
 			views.get(i).update(this);
-			views.get(i).isDestinationReached(this);
+		}
+		if (destinationReached()) {
+			// Output on console
+			System.out.println("Congratulations. You have reached the destination and won the game.");
+			System.out.println();
+			// JDialog to ask for further steps
+			JDialog destinationReached = new JDialog();
+			destinationReached.setTitle("Congratulations! You won the game.");
+			destinationReached.setSize(300,75);
+			// JDialog cannot be closed on its own. The game can be restarted or the whole application
+			// can be closed using the button.
+			destinationReached.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+
+			// Create panel
+			JPanel panel = new JPanel();
+			panel.setLayout(new FlowLayout());
+
+			// Create buttons
+			JButton restart = new JButton(new AbstractAction("Restart Game") {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					setPlayerX(startX);
+					setPlayerY(startY);
+					System.out.println("Game restarted.");
+					updateViews();
+					// Close JDialog
+					destinationReached.dispose();
+				}
+			});
+			JButton close = new JButton(new AbstractAction("Close Game") {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// Application is terminated completely.
+					System.exit(0);
+				}
+			});
+			panel.add(restart);
+			panel.add(close);
+
+			destinationReached.add(panel);
+			destinationReached.setModal(true);
+			destinationReached.setVisible(true);
 		}
 	}
 }
