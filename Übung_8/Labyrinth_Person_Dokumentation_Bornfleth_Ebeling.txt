@@ -30,7 +30,9 @@ Schwierigkeit des Spiels:
 Es werden Verfolger erzeugt. Befinden sich Spieler und Verfolger auf einem Feld, ist das Spiel verloren. Sowohl in der Klasse GraphicView als auch in der
 Klasse World werden die Verfolger in einer ArrayList gespeichert. In der GUI sind sie als schwarze Kreise mit einem X zu erkennen, in der Konsolendarstellung
 als X.
-
+Die Verfolger können sich wie der Spieler nach oben, unten, links oder rechts bewegen. Eine erste Zufallszahl (-1 oder 1) bestimmt, ob die Bewegung in x- oder
+y-Richtung erfolgt. Eine zweite Zufallszahl (-1 oder 1) sagt dann, ob es in positiver oder negativer Richtung ist. Die Implemmentierung erfolgt in der Subklasse Pursuer
+der Klasse World.
 
 Weitere Anmerkungen:
 Die Implementierungen der Abfragen zum Beenden oder Neustarten des Spiels finden in der Klasse World statt. GraphicView und ConsoleView beschränken

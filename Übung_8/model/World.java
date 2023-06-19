@@ -42,21 +42,79 @@ public class World {
 	private int difficulty = 0;
 	/** Class to implement a pursuer. */
 	public class Pursuer {
-		/** x-coordinate */
+		/**
+		 * x-coordinate
+		 */
 		private int x;
-		/** y-coordinate */
+		/**
+		 * y-coordinate
+		 */
 		private int y;
+
 		public int getX() {
 			return x;
 		}
+
 		public void setX(int x) {
 			this.x = x;
 		}
+
 		public int getY() {
 			return y;
 		}
+
 		public void setY(int y) {
 			this.y = y;
+		}
+
+		/**
+		 * Returns a random number -1 or 1.
+		 */
+		private int randomNumber() {
+			if (Math.random() < 0.5) {
+				return -1;
+			} else {
+				return 1;
+			}
+		}
+
+		/**
+		 * Takes two random numbers (-1 or 1) to update the position of a pursuer.
+		 */
+		public void updatePursuer() {
+			// first number tells whether the movement is in x- or y-direction, the
+			// second whether it is in positive or negative direction.
+			int xOrY = randomNumber();
+			if (xOrY == -1) {
+				int newX = this.x + randomNumber();
+				newX = Math.max(0, newX);
+				newX = Math.min(getWidth() - 1, newX);
+				this.x = newX;
+
+
+				/*
+				try {
+					int newX = x + randomNumber();
+					if (newX < 0 || newX >= width) throw new Exception();
+					x = newX;
+				} catch (Exception e) {
+					updatePursuer();
+				} */
+			} else if (xOrY == 1) {
+				int newY = this.y + randomNumber();
+				newY = Math.max(0, newY);
+				newY = Math.min(getWidth() - 1, newY);
+				this.y = newY;
+
+				/*
+				try {
+					int newY = y + randomNumber();
+					if (newY < 0 || newY >= height) throw new Exception();
+					y = newY;
+				} catch (Exception e) {
+					updatePursuer();
+				} */
+			}
 		}
 	}
 	/** ArrayList to store the pursuers */
@@ -83,12 +141,7 @@ public class World {
 			pursuers.add(new Pursuer());
 		}
 		// Pursuers start at different positions of the field.
-		pursuers.get(0).setX(startX);
-		pursuers.get(0).setY(destinationY);
-		pursuers.get(1).setX(destinationX);
-		pursuers.get(1).setY(startY);
-		pursuers.get(2).setX(destinationX / 2);
-		pursuers.get(2).setY(destinationY / 2);
+		setPursuersToStart();
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -115,6 +168,26 @@ public class World {
 		playerX = Math.min(getWidth() - 1, playerX);
 		this.playerX = playerX;
 	}
+
+	public int getPlayerY() {
+		return playerY;
+	}
+
+	public void setPlayerY(int playerY) {
+		playerY = Math.max(0, playerY);
+		playerY = Math.min(getHeight() - 1, playerY);
+		this.playerY = playerY;
+	}
+	public int getDifficulty() { return difficulty; }
+	public void setDifficulty(int difficulty) {this.difficulty = difficulty;}
+	/** Get pursuer from ArrayList for specific index. */
+	public Pursuer getPursuer(int index) {
+		return pursuers.get(index);
+	}
+
+	///////////////////////////////////////////////////////////////////////////
+	// Functions to check for certain player positions
+
 	/** Checks whether the player has reached the destination */
 	private boolean destinationReached() {
 		if (playerX == destinationX && playerY == destinationY) {
@@ -134,22 +207,6 @@ public class World {
 		return false;
 	}
 
-	public int getPlayerY() {
-		return playerY;
-	}
-
-	public void setPlayerY(int playerY) {
-		playerY = Math.max(0, playerY);
-		playerY = Math.min(getHeight() - 1, playerY);
-		this.playerY = playerY;
-	}
-	public int getDifficulty() { return difficulty; }
-	public void setDifficulty(int difficulty) {this.difficulty = difficulty;}
-	/** Get pursuer from ArrayList for specific index. */
-	public Pursuer getPursuer(int index) {
-		return pursuers.get(index);
-	}
-
 
 	///////////////////////////////////////////////////////////////////////////
 	// Player Management
@@ -165,6 +222,26 @@ public class World {
 		setPlayerX(getPlayerX() + Direction.getDeltaX(direction));
 		setPlayerY(getPlayerY() + Direction.getDeltaY(direction));
 		updateViews();
+	}
+
+
+	///////////////////////////////////////////////////////////////////////////
+	// Pursuer Management
+	/** Sets the pursuers to their start positions. */
+	public void setPursuersToStart() {
+		pursuers.get(0).setX(startX);
+		pursuers.get(0).setY(destinationY);
+		pursuers.get(1).setX(destinationX);
+		pursuers.get(1).setY(startY);
+		pursuers.get(2).setX(destinationX / 2);
+		pursuers.get(2).setY(destinationY / 2);
+	}
+
+	/** Updates positions of pursuers. */
+	public void updatePursuers() {
+		for (Pursuer pursuer: pursuers) {
+			pursuer.updatePursuer();
+		}
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -214,6 +291,7 @@ public class World {
 				public void actionPerformed(ActionEvent e) {
 					setPlayerX(startX);
 					setPlayerY(startY);
+					setPursuersToStart();
 					System.out.println("Game restarted:");
 					System.out.println();
 					updateViews();
@@ -260,6 +338,7 @@ public class World {
 				public void actionPerformed(ActionEvent e) {
 					setPlayerX(startX);
 					setPlayerY(startY);
+					setPursuersToStart();
 					System.out.println("Game restarted:");
 					System.out.println();
 					updateViews();

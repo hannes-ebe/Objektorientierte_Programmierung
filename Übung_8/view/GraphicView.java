@@ -51,15 +51,32 @@ public class GraphicView extends JPanel implements View {
 		g.setColor(Color.RED);
 		g.fillRect(bg.x, bg.y, bg.width, bg.height);
 
+		// Create new font with bigger size to mark player and pursuers.
+		Font font = new Font("Arial", Font.BOLD, 48);
+		g.setFont(font);
+
 		// Painting objects in order of importance. This way the player is always on top of
-		// every other object.
+		// every other object and the pursuers over start and destination.
+
+		// Painting the start and destination as S and D, if they are not covered by the player.
+		// Start is the upper left rectangle and the destination the bottom right
+		char[] startLabel = new char[1];
+		startLabel[0] = 'S';
+		char[] destinationLabel = new char[1];
+		destinationLabel[0] = 'D';
+		g.setColor(Color.WHITE);
+		g.drawChars(startLabel, 0, 1, player.width / 5, player.height - player.height / 8);
+		g.drawChars(destinationLabel, 0, 1, bg.width - 4 * player.width / 5, bg.height - player.height / 8);
+		/*if (!(player.x == bg.x && player.y == bg.y)) {
+			g.drawChars(startLabel, 0, 1, player.width / 5, player.height - player.height / 8);
+		}
+		if (!(player.x == bg.width - player.width && player.y == bg.height - player.height)) {
+			g.drawChars(destinationLabel, 0, 1, bg.width - 4 * player.width / 5, bg.height - player.height / 8);
+		}*/
 
 		// Painting the pursuers as black circles with an X.
 		char[] pursuerLabel = new char[1];
 		pursuerLabel[0] = 'X';
-		// Create new font with bigger size to mark player and pursuers.
-		Font font = new Font("Arial", Font.BOLD, 48);
-		g.setFont(font);
 		for (Rectangle pursuer: pursuers) {
 			g.setColor(Color.BLACK);
 			g.fillOval(pursuer.x, pursuer.y, pursuer.width, pursuer.height);
@@ -75,18 +92,6 @@ public class GraphicView extends JPanel implements View {
 		g.setColor(Color.WHITE);
 		g.drawChars(playerLabel,0,1,player.x + player.width / 5,player.y + player.height - player.height / 8);
 
-		// Painting the start and destination as S and D, if they are not covered by the player.
-		// Start is the upper left rectangle and the destination the bottom right
-		char[] startLabel = new char[1];
-		startLabel[0] = 'S';
-		char[] destinationLabel = new char[1];
-		destinationLabel[0] = 'D';
-		if (!(player.x == bg.x && player.y == bg.y)) {
-			g.drawChars(startLabel, 0, 1, player.width / 5, player.height - player.height / 8);
-		}
-		if (!(player.x == bg.width - player.width && player.y == bg.height - player.height)) {
-			g.drawChars(destinationLabel, 0, 1, bg.width - 4 * player.width / 5, bg.height - player.height / 8);
-		}
 	}
 
 	@Override

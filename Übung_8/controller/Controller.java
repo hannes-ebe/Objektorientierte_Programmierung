@@ -57,18 +57,22 @@ public class Controller extends JFrame implements KeyListener, ActionListener, M
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_UP:
 			world.movePlayer(1); // 1 to move up
+			world.updatePursuers();
 			break;
 
 		case KeyEvent.VK_DOWN:
-			world.movePlayer(2); // 2 t move down
+			world.movePlayer(2); // 2 to move down
+			world.updatePursuers();
 			break;
 
 		case KeyEvent.VK_LEFT:
 			world.movePlayer(3); // 3 to move left
+			world.updatePursuers();
 			break;
 
 		case KeyEvent.VK_RIGHT:
 			world.movePlayer(4); // 4 to move right
+			world.updatePursuers();
 			break;
 		}
 	}
@@ -83,11 +87,6 @@ public class Controller extends JFrame implements KeyListener, ActionListener, M
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		/*
-		world.setPlayerX(world.getStartX());
-		world.setPlayerY(world.getStartY());
-		System.out.println("Game restarted.");
-		System.out.println();*/
 	}
 
 	
@@ -131,6 +130,7 @@ public class Controller extends JFrame implements KeyListener, ActionListener, M
 	public void restart() {
 		world.setPlayerX(world.getStartX());
 		world.setPlayerY(world.getStartY());
+		world.setPursuersToStart();
 		System.out.println("Game restarted.");
 		System.out.println();
 	}
