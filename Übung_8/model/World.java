@@ -36,6 +36,31 @@ public class World {
 	private int playerX = 0;
 	/** The player's y position in the world. */
 	private int playerY = 0;
+	/** The difficulty of the game.
+	 *  Standard is 0 (easy). Other options are 1 (medium) or 2 (hard).
+	 */
+	private int difficulty = 0;
+	/** Class to implement a pursuer. */
+	public class Pursuer {
+		/** x-coordinate */
+		private int x;
+		/** y-coordinate */
+		private int y;
+		public int getX() {
+			return x;
+		}
+		public void setX(int x) {
+			this.x = x;
+		}
+		public int getY() {
+			return y;
+		}
+		public void setY(int y) {
+			this.y = y;
+		}
+	}
+	/** ArrayList to store the pursuers */
+	private  final ArrayList<Pursuer> pursuers = new ArrayList<>();
 
 	/** Set of views registered to be notified of world updates. */
 	private final ArrayList<View> views = new ArrayList<>();
@@ -51,6 +76,19 @@ public class World {
 		this.startY = 0;
 		this.destinationX = width - 1;
 		this.destinationY = height - 1;
+		// Standard difficulty is set to 0 (easy).
+		this.difficulty = 0;
+		// There are always three pursuers.
+		for (int i = 0; i < 3; i++) {
+			pursuers.add(new Pursuer());
+		}
+		// Pursuers start at different positions of the field.
+		pursuers.get(0).setX(startX);
+		pursuers.get(0).setY(destinationY);
+		pursuers.get(1).setX(destinationX);
+		pursuers.get(1).setY(startY);
+		pursuers.get(2).setX(destinationX / 2);
+		pursuers.get(2).setY(destinationY / 2);
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -94,6 +132,12 @@ public class World {
 		playerY = Math.max(0, playerY);
 		playerY = Math.min(getHeight() - 1, playerY);
 		this.playerY = playerY;
+	}
+	public int getDifficulty() { return difficulty; }
+	public void setDifficulty(int difficulty) {this.difficulty = difficulty;}
+	/** Get pursuer from ArrayList for specific index. */
+	public Pursuer getPursuer(int index) {
+		return pursuers.get(index);
 	}
 
 
@@ -141,7 +185,7 @@ public class World {
 			System.out.println();
 			// JDialog to ask for further steps
 			JDialog destinationReached = new JDialog();
-			destinationReached.setTitle("Congratulations! You won the game.");
+			destinationReached.setTitle("Congratulations! You have won the game.");
 			destinationReached.setSize(300,75);
 			// JDialog cannot be closed on its own. The game can be restarted or the whole application
 			// can be closed using the button.

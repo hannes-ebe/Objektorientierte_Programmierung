@@ -10,7 +10,7 @@ Ziel: unten rechts; Index (width,height)
 In der Klasse World werden die Koordinaten von Start und Ziel als private final Attribute gespeichert und über den
 Konstruktor gesetzt. ConsoleView holt sich die Positionen von Start und Ziel über getter-Methoden und stellt Start
 und Ziel als S (start) und D (destination) dar. Der Spieler, der als Raute dargestellt wird, überlagert stets die
-anderen Symbole in der Konsole. In der GUI ist der Spieler als schwarzer Kreis mit einem weißen P (player) gekennzeichnet.
+anderen Symbole in der Konsole. In der GUI ist der Spieler als blauer Kreis mit einem weißen P (player) gekennzeichnet.
 Start und Ziel sind in der paint-Methode von GraphicView gecodet.
 
 
@@ -25,3 +25,9 @@ das Spiel neu starten oder die Anwendung als Ganzes beenden möchte. Zeitlgleich
 
 Aktualisierung des Modells:
 Die Funktion updateViews wird nicht mehr in den Settern der Spieler-Koordinaten aufgerufen, sondern in der movePlayer-Methode, um doppelte Ausgaben zu vermeiden.
+
+
+Schwierigkeit des Spiels:
+Es werden Verfolger erzeugt. Befinden sich Spieler und Verfolger auf einem Feld, ist das Spiel verloren. Sowohl in der Klasse GraphicView als auch in der
+Klasse World werden die Verfolger in einer ArrayList gespeichert. In der GUI sind sie als schwarze Kreise mit einem X zu erkennen, in der Konsolendarstellung
+als X.

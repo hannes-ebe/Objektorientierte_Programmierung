@@ -12,7 +12,7 @@ import view.GraphicView;
 
 
 /**
- * This is our main program. It is responsible for creating all of the objects
+ * This is our main program. It is responsible for creating all the objects
  * that are part of the MVC pattern and connecting them with each other.
  */
 public class Labyrinth {
@@ -20,9 +20,9 @@ public class Labyrinth {
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                // Dimension of the game board (10x10).
-                int width = 10;
-                int height = 10;
+                // Dimension of the game board (14x14).
+                int width = 14;
+                int height = 14;
                 // Create a new game world.
                 World world = new World(width, height);
 
@@ -79,13 +79,19 @@ public class Labyrinth {
                 menu2.add(new JButton(new AbstractAction("Easy") {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // TODO Hier die Einstellung der einfachen Schwierigkeit...
+                        world.setDifficulty(0);
+                    }
+                }));
+                menu2.add(new JButton(new AbstractAction("Medium") {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        world.setDifficulty(1);
                     }
                 }));
                 menu2.add(new JButton(new AbstractAction("Hard") {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // TODO Hier die Einstellung der schweren Schwierigkeit...
+                        world.setDifficulty(2);
                     }
                 }));
 

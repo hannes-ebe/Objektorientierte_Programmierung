@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Font;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -27,12 +29,17 @@ public class GraphicView extends JPanel implements View {
 		this.HEIGHT = height;
 		this.fieldDimension = fieldDimension;
 		this.bg = new Rectangle(WIDTH, HEIGHT);
+		for (int i = 0; i < 3; i++) {
+			this.pursuers.add(new Rectangle(1,1));
+		}
 	}
 	
 	/** The background rectangle. */
 	private final Rectangle bg;
-	/** The rectangle we're moving. */
+	/** The player we're moving. */
 	private final Rectangle player = new Rectangle(1, 1);
+	/** Array List of pursuers. */
+	private final ArrayList<Rectangle> pursuers = new ArrayList<>();
 	
 	/**
 	 * Creates a new instance.
@@ -44,15 +51,28 @@ public class GraphicView extends JPanel implements View {
 		g.setColor(Color.RED);
 		g.fillRect(bg.x, bg.y, bg.width, bg.height);
 
+		// Painting objects in order of importance. This way the player is always on top of
+		// every other object.
+
+		// Painting the pursuers as black circles with an X.
+		char[] pursuerLabel = new char[1];
+		pursuerLabel[0] = 'X';
+		// Create new font with bigger size to mark player and pursuers.
+		Font font = new Font("Arial", Font.BOLD, 48);
+		g.setFont(font);
+		for (Rectangle pursuer: pursuers) {
+			g.setColor(Color.BLACK);
+			g.fillOval(pursuer.x, pursuer.y, pursuer.width, pursuer.height);
+			g.setColor(Color.WHITE);
+			g.drawChars(pursuerLabel, 0, 1, pursuer.x + pursuer.width / 5, pursuer.y + pursuer.height - pursuer.height / 8);
+		}
+
 		// Paint player as a black circle with white P
 		char[] playerLabel = new char[1];
 		playerLabel[0] = 'P';
-		g.setColor(Color.BLACK);
+		g.setColor(Color.BLUE);
 		g.fillOval(player.x, player.y, player.width, player.height);
 		g.setColor(Color.WHITE);
-		// Create new font with bigger size to mark player with P
-		Font font = new Font("Arial", Font.BOLD, 48);
-		g.setFont(font);
 		g.drawChars(playerLabel,0,1,player.x + player.width / 5,player.y + player.height - player.height / 8);
 
 		// Painting the start and destination as S and D, if they are not covered by the player.
@@ -77,6 +97,16 @@ public class GraphicView extends JPanel implements View {
 		player.setLocation((int)
 				(world.getPlayerX() * fieldDimension.width),
 				(int) (world.getPlayerY() * fieldDimension.height));
+		// Update size and location of pursuers
+		int i = 0;
+		for (Rectangle pursuer: pursuers) {
+			pursuer.setSize(fieldDimension);
+			pursuer.setLocation((int)
+					(world.getPursuer(i).getX() * fieldDimension.width),
+					(int) (world.getPursuer(i).getY() * fieldDimension.height));
+			i++;
+		}
+
 		repaint();
 	}
 	
