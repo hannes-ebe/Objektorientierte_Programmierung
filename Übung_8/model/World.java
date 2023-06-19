@@ -115,6 +115,7 @@ public class World {
 		playerX = Math.min(getWidth() - 1, playerX);
 		this.playerX = playerX;
 	}
+	/** Checks whether the player has reached the destination */
 	private boolean destinationReached() {
 		if (playerX == destinationX && playerY == destinationY) {
 			return true;
@@ -122,6 +123,15 @@ public class World {
 		else {
 			return false;
 		}
+	}
+	/** Checks whether a pursuer has caught the player. */
+	private boolean caught() {
+		for (Pursuer pursuer: pursuers) {
+			if (pursuer.getX() == playerX && pursuer.getY() == playerY) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public int getPlayerY() {
@@ -179,10 +189,13 @@ public class World {
 		for (int i = 0; i < views.size(); i++) {
 			views.get(i).update(this);
 		}
+
+		// Ending current run of the game if the destination is reached.
 		if (destinationReached()) {
 			// Output on console
 			System.out.println("Congratulations. You have reached the destination and won the game.");
 			System.out.println();
+
 			// JDialog to ask for further steps
 			JDialog destinationReached = new JDialog();
 			destinationReached.setTitle("Congratulations! You have won the game.");
@@ -201,7 +214,8 @@ public class World {
 				public void actionPerformed(ActionEvent e) {
 					setPlayerX(startX);
 					setPlayerY(startY);
-					System.out.println("Game restarted.");
+					System.out.println("Game restarted:");
+					System.out.println();
 					updateViews();
 					// Close JDialog
 					destinationReached.dispose();
@@ -220,6 +234,52 @@ public class World {
 			destinationReached.add(panel);
 			destinationReached.setModal(true);
 			destinationReached.setVisible(true);
+		}
+
+		// Ending current run of the game if player is caught.
+		if (caught()) {
+			// Output on console
+			System.out.println("Oh no! You have been caught.");
+			System.out.println();
+
+			// JDialog to ask for further steps
+			JDialog caught = new JDialog();
+			caught.setTitle("Oh no! You have been caught.");
+			caught.setSize(300,75);
+			// JDialog cannot be closed on its own. The game can be restarted or the whole application
+			// can be closed using the button.
+			caught.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+
+			// Create panel
+			JPanel panel = new JPanel();
+			panel.setLayout(new FlowLayout());
+
+			// Create buttons
+			JButton restart = new JButton(new AbstractAction("Restart Game") {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					setPlayerX(startX);
+					setPlayerY(startY);
+					System.out.println("Game restarted:");
+					System.out.println();
+					updateViews();
+					// Close JDialog
+					caught.dispose();
+				}
+			});
+			JButton close = new JButton(new AbstractAction("Close Game") {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// Application is terminated completely.
+					System.exit(0);
+				}
+			});
+			panel.add(restart);
+			panel.add(close);
+
+			caught.add(panel);
+			caught.setModal(true);
+			caught.setVisible(true);
 		}
 	}
 }
