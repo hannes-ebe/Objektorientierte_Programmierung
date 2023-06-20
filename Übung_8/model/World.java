@@ -84,13 +84,13 @@ public class World {
 		public void updatePursuer() {
 			// first number tells whether the movement is in x- or y-direction, the
 			// second whether it is in positive or negative direction.
-			int xOrY = randomNumber();
 			boolean validMove = false;
 			while (!validMove) {
+				int xOrY = randomNumber();
 				if (xOrY == -1) {
 					int newX = this.x + randomNumber();
 					// First check whether new position is on the game board.
-					// Second check whether the player hit a wall.
+					// Second check whether the pursuer hit a wall.
 					if (newX >= 0 && newX < getWidth()) {
 						if (!labyrinth[newX][getY()]) {
 							this.x = newX;
@@ -100,7 +100,7 @@ public class World {
 				} else if (xOrY == 1) {
 					int newY = this.y + randomNumber();
 					// First check whether new position is on the game board.
-					// Second check whether the player hit a wall.
+					// Second check whether the pursuer hit a wall.
 					if (newY >= 0 && newY < getWidth()) {
 						if (!labyrinth[getX()][newY]) {
 							this.y = newY;

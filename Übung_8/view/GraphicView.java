@@ -81,11 +81,11 @@ public class GraphicView extends JPanel implements View {
 		g.drawChars(destinationLabel, 0, 1, bg.width - 4 * player.width / 5, bg.height - player.height / 8);
 
 
-		// Painting the pursuers as black circles with an X.
+		// Painting the pursuers as light grey circles with an X.
 		char[] pursuerLabel = new char[1];
 		pursuerLabel[0] = 'X';
 		for (Rectangle pursuer: pursuers) {
-			g.setColor(Color.BLACK);
+			g.setColor(Color.LIGHT_GRAY);
 			g.fillOval(pursuer.x, pursuer.y, pursuer.width, pursuer.height);
 			g.setColor(Color.WHITE);
 			g.drawChars(pursuerLabel, 0, 1, pursuer.x + pursuer.width / 5, pursuer.y + pursuer.height - pursuer.height / 8);
