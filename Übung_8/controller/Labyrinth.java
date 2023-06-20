@@ -29,30 +29,30 @@ public class Labyrinth {
                 // Create labyrinth for game world.
                 boolean[][] labyrinth = new boolean[width][height];
                 boolean[] helpArray0 = {false,false,false,false,false,false,true,false,false,false,false,false,false,
-                        false,false,true,false,false,false,true,false,false,false,true,false,false,false,true,false,false,false};
+                        false,false,true,false,false,false,true,false,false,false,true,false,false,false,true,false,true,false};
                 labyrinth[0] = helpArray0;
-                boolean[] helpArray1 = {false,true,true,true,true,false,true,false,false,false,false,false,false,
-                        false,false,true,false,false,false,true,false,false,false,true,false,false,false,true,false,false,false};
+                boolean[] helpArray1 = {false,true,true,true,true,false,true,false,true,true,true,true,true,
+                        true,false,true,true,true,false,true,true,true,false,true,false,true,true,true,false,true,false};
                 labyrinth[1] = helpArray1;
-                boolean[] helpArray2 = {false,false,false,false,false,false,false,false,false,false,false,false,false,
-                        false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
+                boolean[] helpArray2 = {false,false,false,false,false,false,false,false,true,false,false,false,false,
+                        false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
                 labyrinth[2] = helpArray2;
-                boolean[] helpArray3 = {false,true,true,false,true,true,true,false,false,false,false,false,false,
-                        false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
+                boolean[] helpArray3 = {false,true,true,false,true,true,true,false,true,true,false,true,true,
+                        true,true,true,true,true,true,true,false,true,true,false,true,true,false,true,true,true,false};
                 labyrinth[3] = helpArray3;
-                boolean[] helpArray4 = {false,false,false,false,false,false,false,false,false,false,false,false,false,
-                        false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
+                boolean[] helpArray4 = {false,false,false,false,false,true,false,false,false,false,false,false,false,
+                        false,false,true,false,false,false,false,false,false,false,false,true,false,false,false,true,false,false};
                 labyrinth[4] = helpArray4;
-                boolean[] helpArray5 = {true,true,true,true,false,false,false,false,false,false,false,false,false,
-                        false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
+                boolean[] helpArray5 = {true,true,true,true,false,true,true,true,true,true,true,true,true,
+                        false,true,true,true,true,false,true,true,true,false,true,true,false,true,true,true,false,true};
                 labyrinth[5] = helpArray5;
-                boolean[] helpArray6 = {false,false,false,false,false,false,false,false,false,false,false,false,false,
+                boolean[] helpArray6 = {false,false,false,false,false,true,false,false,false,false,false,false,false,
                         false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
                 labyrinth[6] = helpArray6;
-                boolean[] helpArray7 = {false,false,false,false,false,false,false,false,false,false,false,false,false,
-                        false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
+                boolean[] helpArray7 = {false,true,true,true,true,true,true,false,true,true,true,false,true,
+                        true,false,true,true,true,true,true,true,false,true,true,false,true,true,true,false,true,false};
                 labyrinth[7] = helpArray7;
-                boolean[] helpArray8 = {false,false,false,false,false,false,false,false,false,false,false,false,false,
+                boolean[] helpArray8 = {false,false,false,false,true,false,false,false,true,false,false,false,false,
                         false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
                 labyrinth[8] = helpArray8;
                 boolean[] helpArray9 = {false,false,false,false,false,false,false,false,false,false,false,false,false,
