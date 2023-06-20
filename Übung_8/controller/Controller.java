@@ -58,21 +58,25 @@ public class Controller extends JFrame implements KeyListener, ActionListener, M
 		case KeyEvent.VK_UP:
 			world.movePlayer(1); // 1 to move up
 			world.updatePursuers();
+			world.updateViews();
 			break;
 
 		case KeyEvent.VK_DOWN:
 			world.movePlayer(2); // 2 to move down
 			world.updatePursuers();
+			world.updateViews();
 			break;
 
 		case KeyEvent.VK_LEFT:
 			world.movePlayer(3); // 3 to move left
 			world.updatePursuers();
+			world.updateViews();
 			break;
 
 		case KeyEvent.VK_RIGHT:
 			world.movePlayer(4); // 4 to move right
 			world.updatePursuers();
+			world.updateViews();
 			break;
 		}
 	}

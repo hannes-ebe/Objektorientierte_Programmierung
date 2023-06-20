@@ -85,35 +85,29 @@ public class World {
 			// first number tells whether the movement is in x- or y-direction, the
 			// second whether it is in positive or negative direction.
 			int xOrY = randomNumber();
-			if (xOrY == -1) {
-				int newX = this.x + randomNumber();
-				newX = Math.max(0, newX);
-				newX = Math.min(getWidth() - 1, newX);
-				this.x = newX;
-
-
-				/*
-				try {
-					int newX = x + randomNumber();
-					if (newX < 0 || newX >= width) throw new Exception();
-					x = newX;
-				} catch (Exception e) {
-					updatePursuer();
-				} */
-			} else if (xOrY == 1) {
-				int newY = this.y + randomNumber();
-				newY = Math.max(0, newY);
-				newY = Math.min(getWidth() - 1, newY);
-				this.y = newY;
-
-				/*
-				try {
-					int newY = y + randomNumber();
-					if (newY < 0 || newY >= height) throw new Exception();
-					y = newY;
-				} catch (Exception e) {
-					updatePursuer();
-				} */
+			boolean validMove = false;
+			while (!validMove) {
+				if (xOrY == -1) {
+					int newX = this.x + randomNumber();
+					// First check whether new position is on the game board.
+					// Second check whether the player hit a wall.
+					if (newX >= 0 && newX < getWidth()) {
+						if (!labyrinth[newX][getY()]) {
+							this.x = newX;
+							validMove = true;
+						}
+					}
+				} else if (xOrY == 1) {
+					int newY = this.y + randomNumber();
+					// First check whether new position is on the game board.
+					// Second check whether the player hit a wall.
+					if (newY >= 0 && newY < getWidth()) {
+						if (!labyrinth[getX()][newY]) {
+							this.y = newY;
+							validMove = true;
+						}
+					}
+				}
 			}
 		}
 	}
@@ -122,11 +116,15 @@ public class World {
 
 	/** Set of views registered to be notified of world updates. */
 	private final ArrayList<View> views = new ArrayList<>();
+	/** 2-dimensional ArrayList to store labyrinth walls as true, else false.
+	 * First dimension is x.
+	 */
+	private boolean[][] labyrinth;
 
 	/**
 	 * Creates a new world with the given size.t
 	 */
-	public World(int width, int height) {
+	public World(int width, int height, boolean[][] labyrinth) {
 		// Normally, we would check the arguments for proper values
 		this.width = width;
 		this.height = height;
@@ -142,6 +140,7 @@ public class World {
 		}
 		// Pursuers start at different positions of the field.
 		setPursuersToStart();
+		this.labyrinth = labyrinth;
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -164,6 +163,7 @@ public class World {
 	}
 
 	public void setPlayerX(int playerX) {
+		// Checks whether the new position is outside the game board.
 		playerX = Math.max(0, playerX);
 		playerX = Math.min(getWidth() - 1, playerX);
 		this.playerX = playerX;
@@ -174,6 +174,7 @@ public class World {
 	}
 
 	public void setPlayerY(int playerY) {
+		// Checks whether the new position is outside the game board.
 		playerY = Math.max(0, playerY);
 		playerY = Math.min(getHeight() - 1, playerY);
 		this.playerY = playerY;
@@ -183,6 +184,9 @@ public class World {
 	/** Get pursuer from ArrayList for specific index. */
 	public Pursuer getPursuer(int index) {
 		return pursuers.get(index);
+	}
+	public boolean[][] getLabyrinth() {
+		return labyrinth;
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -215,13 +219,22 @@ public class World {
 	 * Moves the player along the given direction.
 	 * 
 	 * @param direction where to move. 1 up, 2 down, 3, left, 4 right
+	 * @return boolean value whether the player has hit a wall. If he hit
+	 * a wall nothing changes.
 	 */
-	public void movePlayer(int direction) {	
+	public void movePlayer(int direction) {
 		// The direction tells us exactly how much we need to move along
 		// every direction
-		setPlayerX(getPlayerX() + Direction.getDeltaX(direction));
-		setPlayerY(getPlayerY() + Direction.getDeltaY(direction));
-		updateViews();
+		int newX = getPlayerX() + Direction.getDeltaX(direction);
+		int newY = getPlayerY() + Direction.getDeltaY(direction);
+		// First check whether new position is on the game board.
+		// Second check whether the player hit a wall.
+		if (newX >= 0 && newX < width && newY >= 0 && newY < height) {
+			if (!(labyrinth[newX][newY])) {
+				setPlayerX(newX);
+				setPlayerY(newY);
+			}
+		}
 	}
 
 

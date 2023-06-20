@@ -24,7 +24,8 @@ Falls der Spieler gefangen wird, wird über die GUI ebenfalls gefragt, ob die An
 werden soll.
 
 Aktualisierung des Modells:
-Die Funktion updateViews wird nicht mehr in den Settern der Spieler-Koordinaten aufgerufen, sondern in der movePlayer-Methode, um doppelte Ausgaben zu vermeiden.
+Die Funktion updateViews wird nicht mehr in den Settern der Spieler-Koordinaten aufgerufen, sondern in der keyPressed-Methode des KeyListeners,
+da immer, wenn der Spieler sich bewegt anschließend auch die Verfolger geupdated werden und ein Update der Views nötig ist.
 
 Schwierigkeit des Spiels:
 Es werden Verfolger erzeugt. Befinden sich Spieler und Verfolger auf einem Feld, ist das Spiel verloren. Sowohl in der Klasse GraphicView als auch in der
@@ -33,6 +34,12 @@ als X.
 Die Verfolger können sich wie der Spieler nach oben, unten, links oder rechts bewegen. Eine erste Zufallszahl (-1 oder 1) bestimmt, ob die Bewegung in x- oder
 y-Richtung erfolgt. Eine zweite Zufallszahl (-1 oder 1) sagt dann, ob es in positiver oder negativer Richtung ist. Die Implemmentierung erfolgt in der Subklasse Pursuer
 der Klasse World.
+
+Labyrinth:
+Die Positionen der Wandelemente sind als boolsche Werte in einem zweidimensionalen Array gespeichert. Die erste Dimension entspricht der x-Achse, die zweite
+der y-Achse. Wird ein Zug getätigt und der Spieler würde das Spielfeld verlassen oder eine Wand treffen, wird seine Position nicht aktualisiert. Jedoch führen
+die Verfolger trotzdem einen Zug durch. Die Verfolger sind so implementiert, dass sie nur gültige Züge machen, also nicht gegen Wände laufen.
+
 
 Weitere Anmerkungen:
 Die Implementierungen der Abfragen zum Beenden oder Neustarten des Spiels finden in der Klasse World statt. GraphicView und ConsoleView beschränken

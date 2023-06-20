@@ -30,6 +30,8 @@ public class ConsoleView implements View {
 			xPursuers[i] = world.getPursuer(i).getX();
 			yPursuers[i] = world.getPursuer(i).getY();
 		}
+		// labyrinth of current game.
+		boolean[][] labyrinth = world.getLabyrinth();
 
 		for (int row = 0; row < world.getHeight(); row++) {
 			for (int col = 0; col < world.getWidth(); col++) {
@@ -43,7 +45,9 @@ public class ConsoleView implements View {
 					System.out.print('S');
 				} else if (row == destinationY && col == destinationX) {
 					System.out.print('D');
-				} else {
+				} else if (labyrinth[col][row]){
+					System.out.print('=');
+				} else{
 					System.out.print(".");
 				}
 			}
