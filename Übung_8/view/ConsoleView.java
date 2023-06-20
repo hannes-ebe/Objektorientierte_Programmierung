@@ -33,28 +33,41 @@ public class ConsoleView implements View {
 		// labyrinth of current game.
 		boolean[][] labyrinth = world.getLabyrinth();
 
+		for (int i = 0; i < world.getWidth()+2; i++) {
+			System.out.print(" = ");
+		}
+		// new line
+		System.out.println();
+
 		for (int row = 0; row < world.getHeight(); row++) {
+			System.out.print(" = ");
 			for (int col = 0; col < world.getWidth(); col++) {
 				// If the player is here, print #, otherwise print .
 				// Start and destination are marked as S and D
 				if (row == playerY && col == playerX) {
-					System.out.print("#");
+					System.out.print(" P ");
 				} else if ((row == xPursuers[0] && col == yPursuers[0]) || (row == xPursuers[1] && col == yPursuers[1]) || (row == xPursuers[2] && col == yPursuers[2])) {
-					System.out.print("X");
+					System.out.print(" X ");
 				} else if (row == startY && col == startX) {
-					System.out.print('S');
+					System.out.print(" S ");
 				} else if (row == destinationY && col == destinationX) {
-					System.out.print('D');
+					System.out.print(" D ");
 				} else if (labyrinth[col][row]){
-					System.out.print('=');
+					System.out.print(" = ");
 				} else{
-					System.out.print(".");
+					System.out.print("   ");
 				}
 			}
+			System.out.print(" = ");
 			// A newline after every row
 			System.out.println();
 		}
-		// A newline between every update
+		for (int i = 0; i < world.getWidth()+2; i++) {
+			System.out.print(" = ");
+		}
+
+		// An empty line between every update
+		System.out.println();
 		System.out.println();
 		}
 	}
