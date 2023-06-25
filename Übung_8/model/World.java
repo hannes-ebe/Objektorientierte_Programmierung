@@ -5,8 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import controller.Labyrinth;
 import view.View;
 
+import javax.lang.model.type.NullType;
 import javax.swing.*;
 
 /**
@@ -78,6 +80,137 @@ public class World {
 			}
 		}
 
+		private boolean inBounds(int k){
+			return (k>=0 &&k<getWidth());
+		}
+
+		/**
+		 * Difficulty with minmax Algorithm
+		 */
+		private ArrayList<Integer> possibleMoves(int x1,int y1){
+			ArrayList<Integer> sol= new ArrayList();
+			boolean pos=false;
+			if(inBounds(x1+1)&&!labyrinth[x1+1][y1]) {//right
+				sol.add(3);
+				pos=true;
+			}
+			if(inBounds(x1-1)&&!labyrinth[x1-1][y1]){//left
+				sol.add(2);
+				pos=true;
+			}
+			if (inBounds(y1+1)&&!labyrinth[x1][y1+1]) {//up
+				sol.add(0);
+				pos=true;
+			}
+			if (inBounds(y1-1)&&!labyrinth[x1][y1-1]) {//down
+				sol.add(1);
+				pos=true;
+			}
+
+			if(!pos){ // Should not be possible,only if stuck between 4 walls.
+				sol.add(-1);
+			}
+			return sol;
+		}
+		private void moveOpp(int dir){
+			if(dir==DIR_UP){
+				setY(getY()+1);
+			}
+			if(dir==DIR_DOWN){
+				setY(getY()-1);
+			}
+			if(dir==DIR_LEFT){
+				setX(getX()-1);
+			}
+			if(dir==DIR_RIGHT){
+				setX(getX()+1);
+			}
+		}
+		private void movePlayer(int dir){
+			if(dir==DIR_UP){
+				setPlayerY((getPlayerY()+1));
+			}
+			if(dir==DIR_DOWN){
+				setPlayerY(getPlayerY()-1);
+			}
+			if(dir==DIR_LEFT){
+				setPlayerX(getPlayerX()-1);
+			}
+			if(dir==DIR_RIGHT){
+				setPlayerX(getPlayerX()+1);
+			}
+		}
+		private int invertMove(int dir){
+			if(dir==DIR_UP){
+				return DIR_DOWN;
+			}
+			if(dir==DIR_DOWN){
+				return DIR_UP;
+			}
+			if(dir==DIR_LEFT){
+				return DIR_RIGHT;
+			}
+			if(dir==DIR_RIGHT){
+				return DIR_LEFT;
+			}
+			return -1;
+		}
+		private double eval(int newX,int newY){
+			return -(Math.abs(newX-getPlayerX())+Math.abs(newY-getPlayerY()));
+		}
+
+		private int wishdepth;
+		private int saveturn;
+		private double max(int tiefe) {
+
+			if (tiefe == 0 || caught()) {
+				return eval(getX(), getY());
+			}
+			double max = Float.NEGATIVE_INFINITY;
+			ArrayList<Integer> moves = possibleMoves(getX(),getY());
+			int move;
+			double wert;
+			while (!moves.isEmpty()) {
+				move= moves.remove(0);// Do Move here and take it out of the List(save the move in a variable)
+				moveOpp(move);
+				wert = min(tiefe - 1);
+				moveOpp(invertMove(move));
+				if (wert > max) {
+					max = wert;
+					if (tiefe == wishdepth) {
+						saveturn = move;
+					}
+				}
+			}
+
+			return max;
+		}
+	    private double min(int tiefe){
+			if (tiefe==0 || caught()){
+				return eval(x,y);
+			}
+			double min=Float.POSITIVE_INFINITY;
+			ArrayList<Integer> moves=possibleMoves(getPlayerX(),getPlayerY());
+			int move;
+			double wert;
+			while(!moves.isEmpty()){
+				move=moves.remove(0);
+				//movePlayer(move);
+				wert=max(tiefe-1);
+				//movePlayer(invertMove(move));
+				if (wert < min) {
+					min=wert;
+					if(tiefe==wishdepth){
+						saveturn=move;
+					}
+				}
+
+			}
+			return min;
+		}
+
+
+
 		/**
 		 * Takes two random numbers (-1 or 1) to update the position of a pursuer.
 		 */
@@ -85,31 +218,43 @@ public class World {
 			// first number tells whether the movement is in x- or y-direction, the
 			// second whether it is in positive or negative direction.
 			boolean validMove = false;
-			while (!validMove) {
-				int xOrY = randomNumber();
-				if (xOrY == -1) {
-					int newX = this.x + randomNumber();
-					// First check whether new position is on the game board.
-					// Second check whether the pursuer hit a wall.
-					if (newX >= 0 && newX < getWidth()) {
-						if (!labyrinth[newX][getY()]) {
-							this.x = newX;
-							validMove = true;
+			if(getDifficulty()!=2) {
+				while (!validMove) {
+					int xOrY = randomNumber();
+					if (xOrY == -1) {
+						int newX = this.x + randomNumber();
+						// First check whether new position is on the game board.
+						// Second check whether the pursuer hit a wall.
+						if (newX >= 0 && newX < getWidth()) {
+							if (!labyrinth[newX][getY()]) {
+								this.x = newX;
+								validMove = true;
+							}
 						}
-					}
-				} else if (xOrY == 1) {
-					int newY = this.y + randomNumber();
-					// First check whether new position is on the game board.
-					// Second check whether the pursuer hit a wall.
-					if (newY >= 0 && newY < getWidth()) {
-						if (!labyrinth[getX()][newY]) {
-							this.y = newY;
-							validMove = true;
+					} else if (xOrY == 1) {
+						int newY = this.y + randomNumber();
+						// First check whether new position is on the game board.
+						// Second check whether the pursuer hit a wall.
+						if (newY >= 0 && newY < getWidth()) {
+							if (!labyrinth[getX()][newY]) {
+								this.y = newY;
+								validMove = true;
+							}
 						}
 					}
 				}
 			}
+			if(getDifficulty()==2) {
+				wishdepth=10;
+				saveturn= -1;
+				double wert =max(wishdepth);
+				System.out.println(wert);
+				if (saveturn!=-1) {
+					moveOpp(saveturn);
+				}
+			}
 		}
+
 	}
 	/** ArrayList to store the pursuers */
 	private  final ArrayList<Pursuer> pursuers = new ArrayList<>();
