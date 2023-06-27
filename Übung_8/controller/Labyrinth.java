@@ -174,28 +174,39 @@ public class Labyrinth {
                     }
                 }));
 
-                JMenu menu2 = new JMenu("Difficulty");
+                JMenu menu2 = new JMenu("Set Difficulty");
+
+                // Display current difficulty
+                String currentDifficulty = world.getDifficultyString();
+                JLabel difficultyTextField = new JLabel("    Current Difficulty:    " + currentDifficulty);
+
                 menu2.add(new JButton(new AbstractAction("Easy") {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         world.setDifficulty(0);
+                        difficultyTextField.setText("    Current Difficulty:    " + world.getDifficultyString());
                     }
                 }));
                 menu2.add(new JButton(new AbstractAction("Medium") {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         world.setDifficulty(1);
+                        difficultyTextField.setText("    Current Difficulty:    " + world.getDifficultyString());
                     }
                 }));
                 menu2.add(new JButton(new AbstractAction("Hard") {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         world.setDifficulty(2);
+                        difficultyTextField.setText("    Current Difficulty:    " + world.getDifficultyString());
                     }
                 }));
 
+                // Add menus first and then display the current difficulty.
                 menuBar.add(menu);
                 menuBar.add(menu2);
+                menuBar.add(difficultyTextField);
+
                 controller.setJMenuBar(menuBar);
 
 

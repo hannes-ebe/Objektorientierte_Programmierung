@@ -42,6 +42,7 @@ public class World {
 	 *  Standard is 0 (easy). Other options are 1 (medium) or 2 (hard).
 	 */
 	private int difficulty = 0;
+
 	/** Class to implement a pursuer. */
 	public class Pursuer {
 		/**
@@ -80,13 +81,15 @@ public class World {
 			}
 		}
 
+
+		///////////////////////////////////////////////////////////////////
+		/// Methods for minmax algorithm (Hard difficulty)
+
+		/** Checks whether a index within the bounds of the playing field */
 		private boolean inBounds(int k){
 			return (k>=0 &&k<getWidth());
 		}
-
-		/**
-		 * Difficulty with minmax Algorithm
-		 */
+		/** returns all possible moves from a certain position */
 		private ArrayList<Integer> possibleMoves(int x1,int y1){
 			ArrayList<Integer> sol= new ArrayList();
 			boolean pos=false;
@@ -112,6 +115,7 @@ public class World {
 			}
 			return sol;
 		}
+		/** moves an opponent */
 		private void moveOpp(int dir){
 			if(dir==DIR_UP){
 				setY(getY()+1);
@@ -126,6 +130,7 @@ public class World {
 				setX(getX()+1);
 			}
 		}
+		/** moves the player */
 		private void movePlayer(int dir){
 			if(dir==DIR_UP){
 				setPlayerY((getPlayerY()+1));
@@ -140,6 +145,7 @@ public class World {
 				setPlayerX(getPlayerX()+1);
 			}
 		}
+		/** inverts the move (up to down and left to right) */
 		private int invertMove(int dir){
 			if(dir==DIR_UP){
 				return DIR_DOWN;
@@ -155,12 +161,16 @@ public class World {
 			}
 			return -1;
 		}
+		/** Distance function. The minimization problem is turned into a maximization problem by a negative sign.*/
 		private double eval(int newX,int newY){
 			return -(Math.abs(newX-getPlayerX())+Math.abs(newY-getPlayerY()));
 		}
 
+		/** number of moves the algorithm considers */
 		private int wishdepth;
+		/** optimal move */
 		private int saveturn;
+		/** Maximizes eval. */
 		private double max(int tiefe) {
 
 			if (tiefe == 0 || caught()) {
@@ -185,7 +195,8 @@ public class World {
 
 			return max;
 		}
-	    private double min(int tiefe){
+		/** Minimizes eval. */
+		private double min(int tiefe){
 			if (tiefe==0 || caught()){
 				return eval(x,y);
 			}
@@ -195,9 +206,9 @@ public class World {
 			double wert;
 			while(!moves.isEmpty()){
 				move=moves.remove(0);
-				//movePlayer(move);
+				movePlayer(move);
 				wert=max(tiefe-1);
-				//movePlayer(invertMove(move));
+				movePlayer(invertMove(move));
 				if (wert < min) {
 					min=wert;
 					if(tiefe==wishdepth){
@@ -210,15 +221,14 @@ public class World {
 		}
 
 
-
 		/**
-		 * Takes two random numbers (-1 or 1) to update the position of a pursuer.
+		 * Takes two random numbers (-1 or 1) to update the position of a pursuer for easy difficulty.
 		 */
 		public void updatePursuer() {
 			// first number tells whether the movement is in x- or y-direction, the
 			// second whether it is in positive or negative direction.
 			boolean validMove = false;
-			if(getDifficulty()!=2) {
+			if(getDifficulty() == 0) {
 				while (!validMove) {
 					int xOrY = randomNumber();
 					if (xOrY == -1) {
@@ -244,11 +254,20 @@ public class World {
 					}
 				}
 			}
+			if(getDifficulty()==1) {
+				wishdepth=1;
+				saveturn= -1;
+				double wert =max(wishdepth);
+				// System.out.println(wert);
+				if (saveturn!=-1) {
+					moveOpp(saveturn);
+				}
+			}
 			if(getDifficulty()==2) {
 				wishdepth=10;
 				saveturn= -1;
 				double wert =max(wishdepth);
-				System.out.println(wert);
+				// System.out.println(wert);
 				if (saveturn!=-1) {
 					moveOpp(saveturn);
 				}
@@ -256,6 +275,7 @@ public class World {
 		}
 
 	}
+
 	/** ArrayList to store the pursuers */
 	private  final ArrayList<Pursuer> pursuers = new ArrayList<>();
 
@@ -279,7 +299,7 @@ public class World {
 		this.destinationY = height - 1;
 		// Standard difficulty is set to 0 (easy).
 		this.difficulty = 0;
-		// There are always three pursuers.
+		// There are always at least three pursuers.
 		for (int i = 0; i < 3; i++) {
 			pursuers.add(new Pursuer());
 		}
@@ -298,9 +318,13 @@ public class World {
 	public int getHeight() {
 		return height;
 	}
+
 	public int getStartX() { return startX; }
+
 	public int getStartY() { return startY; }
+
 	public int getDestinationX() { return destinationX; }
+
 	public int getDestinationY() { return destinationY; }
 
 	public int getPlayerX() {
@@ -324,15 +348,31 @@ public class World {
 		playerY = Math.min(getHeight() - 1, playerY);
 		this.playerY = playerY;
 	}
+
 	public int getDifficulty() { return difficulty; }
+
 	public void setDifficulty(int difficulty) {this.difficulty = difficulty;}
+
 	/** Get pursuer from ArrayList for specific index. */
 	public Pursuer getPursuer(int index) {
 		return pursuers.get(index);
 	}
+
 	public boolean[][] getLabyrinth() {
 		return labyrinth;
 	}
+
+	/** Get current difficulty as string */
+	public String getDifficultyString() {
+		if (getDifficulty() == 0) {
+			return "Easy";
+		} else if (getDifficulty() == 1) {
+			return "Medium";
+		} else {
+			return "Hard";
+		}
+	}
+
 
 	///////////////////////////////////////////////////////////////////////////
 	// Functions to check for certain player positions
@@ -341,11 +381,11 @@ public class World {
 	private boolean destinationReached() {
 		if (playerX == destinationX && playerY == destinationY) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
+
 	/** Checks whether a pursuer has caught the player. */
 	private boolean caught() {
 		for (Pursuer pursuer: pursuers) {
@@ -359,10 +399,10 @@ public class World {
 
 	///////////////////////////////////////////////////////////////////////////
 	// Player Management
-	
+
 	/**
 	 * Moves the player along the given direction.
-	 * 
+	 *
 	 * @param direction where to move. 1 up, 2 down, 3, left, 4 right
 	 * @return boolean value whether the player has hit a wall. If he hit
 	 * a wall nothing changes.
@@ -385,6 +425,7 @@ public class World {
 
 	///////////////////////////////////////////////////////////////////////////
 	// Pursuer Management
+
 	/** Sets the pursuers to their start positions. */
 	public void setPursuersToStart() {
 		pursuers.get(0).setX(startX);
@@ -408,7 +449,7 @@ public class World {
 	/**
 	 * Adds the given view of the world and updates it once. Once registered through
 	 * this method, the view will receive updates whenever the world changes.
-	 * 
+	 *
 	 * @param view the view to be registered.
 	 */
 	public void registerView(View view) {

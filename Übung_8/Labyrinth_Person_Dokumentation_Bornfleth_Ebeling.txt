@@ -1,8 +1,5 @@
 Labyrinth-Person Dokumentation - Pierre Bornfleth und Hannes Ebeling - Übung 8
 
-1. Generieren Sie ein Spielfeld sowie Start und Ziel:
-
-Es wird stets das gleiche vordefinierte Spielfeld genutzt.
 
 Start und Ziel:
 Start: oben links; Index (0,0)
@@ -23,6 +20,9 @@ das Spiel neu starten oder die Anwendung als Ganzes beenden möchte. Zeitgleich 
 Falls der Spieler gefangen wird, wird über die GUI ebenfalls gefragt, ob die Anwendung geschlossen werden oder das Spiel neu gestartet
 werden soll.
 
+Steuerung:
+Die Steuerung des Spielers findet über die Pfeiltasten statt.
+
 Aktualisierung des Modells:
 Die Funktion updateViews wird nicht mehr in den Settern der Spieler-Koordinaten aufgerufen, sondern in der keyPressed-Methode des KeyListeners,
 da immer, wenn der Spieler sich bewegt anschließend auch die Verfolger geupdated werden und ein Update der Views nötig ist.
@@ -30,17 +30,50 @@ da immer, wenn der Spieler sich bewegt anschließend auch die Verfolger geupdate
 Schwierigkeit des Spiels:
 Es werden Verfolger erzeugt. Befinden sich Spieler und Verfolger auf einem Feld, ist das Spiel verloren. Sowohl in der Klasse GraphicView als auch in der
 Klasse World werden die Verfolger in einer ArrayList gespeichert. In der GUI sind sie als hellgraue Kreise mit einem X zu erkennen, in der Konsolendarstellung
-als X.
-Die Verfolger können sich wie der Spieler nach oben, unten, links oder rechts bewegen. Eine erste Zufallszahl (-1 oder 1) bestimmt, ob die Bewegung in x- oder
-y-Richtung erfolgt. Eine zweite Zufallszahl (-1 oder 1) sagt dann, ob es in positiver oder negativer Richtung ist. Die Implemmentierung erfolgt in der Subklasse Pursuer
-der Klasse World.
+als X. Die Schwierigkeit des Spiels kann in der Menu-Bar ausgewählt werden und wird auch dort dargestellt.
+Die Verfolger können sich wie der Spieler nach oben, unten, links oder rechts bewegen. Die Schwierigkeiten sind folgendermaßen realisiert:
+
+Easy:
+Eine erste Zufallszahl (-1 oder 1) bestimmt, ob die Bewegung der drei Verfolger in x- oder y-Richtung erfolgt. Eine zweite Zufallszahl (-1 oder 1) sagt dann,
+ob es in positiver oder negativer Richtung ist. Die Implementierung erfolgt in der Subklasse Pursuer der Klasse World.
+
+Medium:
+Der MinMax-Algorithmus wird genutzt, damit die Verfolger dem Spieler folgen. Der Algorithmus basiert prinzipiell auf der Minimierung des Abstandes zum Spieler. Es
+wird stets der bis zu einer bestimmten Sichttiefe beste Weg gewählt. Für diese Schwierigkeit wird die Tiefe 1 genutzt.
+Es werden auch die möglichen Spielerzüge betrachtet.
+
+Hard:
+Es wird wieder der MinMax-Algorithmus genutzt. Jetzt allerdings mit einer größeren Sichttiefe von 10.
 
 Labyrinth:
 Die Positionen der Wandelemente sind als boolsche Werte in einem zweidimensionalen Array gespeichert. Die erste Dimension entspricht der x-Achse, die zweite
-der y-Achse. Wird ein Zug getätigt und der Spieler würde das Spielfeld verlassen oder eine Wand treffen, wird seine Position nicht aktualisiert. Jedoch führen
-die Verfolger trotzdem einen Zug durch. Die Verfolger sind so implementiert, dass sie nur gültige Züge machen, also nicht gegen Wände laufen.
+der y-Achse. True entspricht einem Wandfeld und False einem Gangfeld. Wird ein Zug getätigt und der Spieler würde das Spielfeld verlassen oder eine Wand treffen,
+wird seine Position nicht aktualisiert. Jedoch führen die Verfolger trotzdem einen Zug durch. Die Verfolger sind so implementiert, dass sie nur gültige Züge machen,
+also nicht gegen Wände laufen.
 
 
 Weitere Anmerkungen:
 Die Implementierungen der Abfragen zum Beenden oder Neustarten des Spiels finden in der Klasse World statt. GraphicView und ConsoleView beschränken
 sich lediglich auf die Darstellung der Spielwelt. Die Implementierung der Menüs befindet sich entsprechend in der Klasse Labyrinth.
+
+
+Genutzte IDE:
+
+IntelliJ IDEA 2023.1 (Community Edition)
+Build \#IC-231.8109.175, built on March 28, 2023
+Runtime version: 17.0.6+10-b829.5 amd64
+VM: OpenJDK 64-Bit Server VM by JetBrains s.r.o.
+Windows 11.0
+GC: G1 Young Generation, G1 Old Generation
+Memory: 2018M
+Cores: 8
+
+Kotlin: 231-1.8.20-IJ8109.175
+
+
+
+Genutzte Java-Version:
+
+openjdk version "17.0.6" 2023-01-17 LTS
+OpenJDK Runtime Environment Microsoft-7209853 (build 17.0.6+10-LTS)
+OpenJDK 64-Bit Server VM Microsoft-7209853 (build 17.0.6+10-LTS, mixed mode, sharing)
