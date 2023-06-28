@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.List;
 
 public class FindFreeRoomsActionListener implements ActionListener {
     private final Reservations controller;
@@ -22,20 +23,21 @@ public class FindFreeRoomsActionListener implements ActionListener {
     /** creating a DateRange-Object from components */
     private DateRange createDateRange(final Component[] components) {
         final LocalDate firstDate = LocalDate.of(
-                Integer.parseInt(((JTextField) components[7]).getText()),
-                Integer.parseInt(((JTextField) components[6]).getText()),
-                Integer.parseInt(((JTextField) components[5]).getText()));
+                Integer.parseInt(((JTextField) components[2]).getText()),
+                Integer.parseInt(((JTextField) components[1]).getText()),
+                Integer.parseInt(((JTextField) components[0]).getText()));
         final LocalDate lastDate = LocalDate.of(
-                Integer.parseInt(((JTextField) components[11]).getText()),
-                Integer.parseInt(((JTextField) components[10]).getText()),
-                Integer.parseInt(((JTextField) components[9]).getText()));
+                Integer.parseInt(((JTextField) components[5]).getText()),
+                Integer.parseInt(((JTextField) components[4]).getText()),
+                Integer.parseInt(((JTextField) components[3]).getText()));
         return new DateRange(firstDate, lastDate);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
         DateRange dateRange = createDateRange(this.components);
-        //List<Integer> freeRooms = controller.listFreeRooms(dateRange);
+        List<Integer> freeRooms = controller.listFreeRooms(dateRange);
         // TODO ListView öffnen mit der Liste der freien Räume
+        RoomList roomList = new RoomList(0);
     }
 
 }

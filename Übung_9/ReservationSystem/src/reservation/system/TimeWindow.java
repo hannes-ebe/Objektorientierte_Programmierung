@@ -45,9 +45,11 @@ public class TimeWindow extends JFrame {
 
         if (index == 0) {
             JButton button = new JButton("View");
+            button.addActionListener(new RoomListActionListener(index));
             timeWindow.add(button);
         } else if (index == 1) {
             JButton button = new JButton("View");
+            button.addActionListener(new RoomListActionListener(index));
             timeWindow.add(button);
         } else {
             JButton button = new JButton("Reserve");
