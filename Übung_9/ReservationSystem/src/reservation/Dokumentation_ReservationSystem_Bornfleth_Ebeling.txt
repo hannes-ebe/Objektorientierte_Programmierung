@@ -1,0 +1,8 @@
+Dokumentation Reservation System - Bornfleth und Ebeling
+
+Die alten Funktionalitäten für die Konsolenausgabe wurden nicht entfernt sondern auskommentiert.
+
+Die Fenster sind in der Klasse ReservationSystem implementiert.
+
+Main Window:
+Der Button Exit schließt die Anwendung.
