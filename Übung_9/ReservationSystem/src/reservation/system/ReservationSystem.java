@@ -38,20 +38,12 @@ public class ReservationSystem {
 	// private final Output output;
 	private final Reservations reservations;
 
-	private final JFrame mainWindow;
-	/** number of rooms */
-	private static final int NUMBER_OF_ROOMS = 10;
-	/* rows and columns in which wooms are ordered in main window */
-	private static final int ROOM_COLUMNS = 5;
-	private static final int ROOM_ROWS = 2;
+	private final MainWindow mainWindow;
 
 	public static void main(final String[] args) {
 		try {
 			final ReservationSystem rs = new ReservationSystem(10);
-			// rs.run();
-
-			// Create main window
-			rs.createMainWindow();
+			// rs.run()
 
 			rs.save();
 		} catch (IOException | LoadException e) {
@@ -64,7 +56,7 @@ public class ReservationSystem {
 	}
 
 	public ReservationSystem(final int numberOfRooms) throws IOException, LoadException {
-		this.mainWindow = createMainWindow();
+		this.mainWindow = new MainWindow();
 
 		final Path filename = Path.of(DATABASE_FILENAME);
 		if (filename.toFile().exists() && filename.toFile().canRead()) {
@@ -80,7 +72,6 @@ public class ReservationSystem {
 		} else {
 			this.reservations = new Reservations(numberOfRooms);
 		}
-		this.mainWindow.setVisible(true);
 	}
 
 	/*
@@ -104,67 +95,6 @@ public class ReservationSystem {
 		}
 	} */
 
-	/** Create the main window */
-	private JFrame createMainWindow() {
-		JFrame mainWindow = new JFrame("Reservation System");
-		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainWindow.setPreferredSize(new Dimension(500,120));
-		mainWindow.setResizable(false);
-		mainWindow.setLayout(new GridLayout(2,1));
-
-		// buttons for different actions
-		JPanel menuButtons = new JPanel();
-		menuButtons.setLayout(new FlowLayout());
-
-		JButton listFree = new JButton("List Free");
-		JButton listOccupied = new JButton("List Occupied");
-		JButton exit = new JButton("Exit");
-		exit.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-		menuButtons.add(listFree);
-		menuButtons.add(listOccupied);
-		menuButtons.add(exit);
-
-		// buttons for different rooms
-		JPanel roomButtons = new JPanel();
-		roomButtons.setLayout(new GridLayout(ROOM_ROWS,ROOM_COLUMNS));
-		for (int i = 0; i < NUMBER_OF_ROOMS; i++) {
-			JButton newRoom = new JButton("Room " + i);
-			roomButtons.add(newRoom);
-		}
-
-		mainWindow.add(menuButtons);
-		mainWindow.add(roomButtons);
-
-		mainWindow.pack();
-		mainWindow.setLocationRelativeTo(null);
-
-		return mainWindow;
-	}
-
-	/** Create a window for the room overview */
-	private JFrame createRoomOverview() {
-		JFrame roomOverview = new JFrame("Room Overview");
-		roomOverview.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		roomOverview.setPreferredSize(new Dimension(500,120));
-		roomOverview.setResizable(false);
-		roomOverview.setLayout(new GridLayout(2,1));
-
-		//ScrollPane für Liste und die drei Buttons...
-
-		return roomOverview;
-	}
-
-	/** Create a window to enter a date range */
-	private JFrame createTimeWindow() {
-		JFrame timeWindow = new JFrame("Enter Time Period");
-
-		return timeWindow;
-	}
 
 	/*
 	private void run() {
