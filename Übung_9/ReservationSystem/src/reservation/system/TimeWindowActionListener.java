@@ -8,12 +8,13 @@ import java.sql.Time;
 public class TimeWindowActionListener implements ActionListener {
     /** Index to  tell what kind of time window the listener is added to. */
     final int INDEX_OF_WINDOW;
-    TimeWindowActionListener(int index) {
+    private Reservations reservations;
+    TimeWindowActionListener(Reservations reservations, int index) {
         INDEX_OF_WINDOW = index;
+        this. reservations = reservations;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        TimeWindow timeWindow = new TimeWindow(INDEX_OF_WINDOW);
-        // timeWindow.addActionListener()
+        TimeWindow timeWindow = new TimeWindow(reservations,INDEX_OF_WINDOW);
     }
 }

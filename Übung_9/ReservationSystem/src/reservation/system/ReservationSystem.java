@@ -51,12 +51,16 @@ public class ReservationSystem {
 		}
 	}
 
+	/** getter-method for reservations */
+	public Reservations getReservations(){
+		return reservations;
+	}
+
 	private void save() throws IOException {
 		this.reservations.save(Path.of(DATABASE_FILENAME));
 	}
 
 	public ReservationSystem(final int numberOfRooms) throws IOException, LoadException {
-		this.mainWindow = new MainWindow();
 
 		final Path filename = Path.of(DATABASE_FILENAME);
 		if (filename.toFile().exists() && filename.toFile().canRead()) {
@@ -72,6 +76,8 @@ public class ReservationSystem {
 		} else {
 			this.reservations = new Reservations(numberOfRooms);
 		}
+
+		this.mainWindow = new MainWindow(reservations);
 	}
 
 	/*

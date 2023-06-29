@@ -11,7 +11,7 @@ public class TimeWindow extends JFrame {
     /** Constructor
      * @param index index to distinguish between free rooms (0), occupied rooms (1) or reserving a room (2)
      */
-    TimeWindow(int index) {
+    TimeWindow(Reservations reservations, int index) {
         JFrame timeWindow = new JFrame("Enter Time Period");
         timeWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         timeWindow.setPreferredSize(new Dimension(500, 120));
@@ -43,9 +43,11 @@ public class TimeWindow extends JFrame {
         timeWindow.add(new JLabel());
         timeWindow.add(new JLabel());
 
+        // Reservations reservations =
+
         if (index == 0) {
             JButton button = new JButton("View");
-            button.addActionListener(new RoomListActionListener(index));
+            button.addActionListener(new FindFreeRoomsActionListener(reservations,components));
             timeWindow.add(button);
         } else if (index == 1) {
             JButton button = new JButton("View");

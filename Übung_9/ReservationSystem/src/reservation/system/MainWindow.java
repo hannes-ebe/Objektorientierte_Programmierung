@@ -12,7 +12,7 @@ public class MainWindow extends JFrame {
     /* rows and columns in which wooms are ordered in main window */
     private static final int ROOM_COLUMNS = 5;
     private static final int ROOM_ROWS = 2;
-    MainWindow() {
+    MainWindow(Reservations reservations) {
         mainWindow = new JFrame("Reservation System");
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainWindow.setPreferredSize(new Dimension(500,120));
@@ -24,9 +24,9 @@ public class MainWindow extends JFrame {
         menuButtons.setLayout(new FlowLayout());
 
         JButton listFree = new JButton("List Free");
-        listFree.addActionListener(new TimeWindowActionListener(0));
+        listFree.addActionListener(new TimeWindowActionListener(reservations,0));
         JButton listOccupied = new JButton("List Occupied");
-        listOccupied.addActionListener(new TimeWindowActionListener(1));
+        listOccupied.addActionListener(new TimeWindowActionListener(reservations,1));
         JButton exit = new JButton("Exit");
         exit.addActionListener(new ActionListener() {
             @Override
