@@ -15,9 +15,9 @@ public class RoomList extends JFrame {
             roomList = new JFrame(("Occupied Rooms"));
         }
         roomList.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        roomList.setPreferredSize(new Dimension(500, 500));
+        roomList.setPreferredSize(new Dimension(250, 250));
         roomList.setResizable(false);
-        roomList.setLayout(new GridLayout(2,1));
+        roomList.setLayout(new FlowLayout());
 
         // scroll pane for list of reservations and three buttons
         JPanel rList= new JPanel();
