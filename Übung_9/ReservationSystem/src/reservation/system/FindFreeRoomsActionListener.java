@@ -22,15 +22,22 @@ public class FindFreeRoomsActionListener implements ActionListener {
     }
     /** creating a DateRange-Object from components */
     DateRange createDateRange(final Component[] components) {
-        final LocalDate firstDate = LocalDate.of(
-                Integer.parseInt(((JTextField) components[2]).getText()),
-                Integer.parseInt(((JTextField) components[1]).getText()),
-                Integer.parseInt(((JTextField) components[0]).getText()));
-        final LocalDate lastDate = LocalDate.of(
-                Integer.parseInt(((JTextField) components[5]).getText()),
-                Integer.parseInt(((JTextField) components[4]).getText()),
-                Integer.parseInt(((JTextField) components[3]).getText()));
-        return new DateRange(firstDate, lastDate);
+        try {
+            final LocalDate firstDate = LocalDate.of(
+                    Integer.parseInt(((JTextField) components[2]).getText()),
+                    Integer.parseInt(((JTextField) components[1]).getText()),
+                    Integer.parseInt(((JTextField) components[0]).getText()));
+            final LocalDate lastDate = LocalDate.of(
+                    Integer.parseInt(((JTextField) components[5]).getText()),
+                    Integer.parseInt(((JTextField) components[4]).getText()),
+                    Integer.parseInt(((JTextField) components[3]).getText()));
+            return new DateRange(firstDate, lastDate);
+        }
+        catch (Exception e){
+            ErrorWindow errorWindow=new ErrorWindow(e);
+
+            return new DateRange(LocalDate.of(0,0,0),LocalDate.of(0,0,0));
+        }
     }
     @Override
     public void actionPerformed(ActionEvent e) {

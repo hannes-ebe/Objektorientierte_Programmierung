@@ -25,11 +25,18 @@ public class DeleteActionListener implements ActionListener {
     }
     /** creating a DateRange-Object from components */
     LocalDate createDate(final Component[] components) {
-        final LocalDate firstDate = LocalDate.of(
-                Integer.parseInt(((JTextField) components[2]).getText()),
-                Integer.parseInt(((JTextField) components[1]).getText()),
-                Integer.parseInt(((JTextField) components[0]).getText()));
-        return firstDate;
+        try {
+            final LocalDate firstDate = LocalDate.of(
+                    Integer.parseInt(((JTextField) components[2]).getText()),
+                    Integer.parseInt(((JTextField) components[1]).getText()),
+                    Integer.parseInt(((JTextField) components[0]).getText()));
+            return firstDate;
+        }
+        catch (Exception e){
+            ErrorWindow errorWindow=new ErrorWindow(e);
+
+            return LocalDate.of(0,0,0);
+        }
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -39,7 +46,7 @@ public class DeleteActionListener implements ActionListener {
             RoomOverview roomOverview=new RoomOverview(controller,roomnumber);
         }
         catch (Exception ex){
-            System.out.println(ex);
+            ErrorWindow errorWindow=new ErrorWindow(ex);
         }
 
     }
