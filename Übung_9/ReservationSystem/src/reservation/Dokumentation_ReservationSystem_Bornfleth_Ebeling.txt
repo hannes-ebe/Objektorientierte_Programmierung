@@ -1,8 +1,36 @@
 Dokumentation Reservation System - Bornfleth und Ebeling
 
-Die alten Funktionalitäten für die Konsolenausgabe wurden nicht entfernt sondern auskommentiert.
+Die alten Funktionalitäten für die Konsolenausgabe wurden nicht entfernt, sondern auskommentiert.
 
-Die Fenster sind in der Klasse ReservationSystem implementiert.
+Die verschiedenen Fenster und ActionListener sind in eigenen Klassen implementiert. Die Hauptklasse ReservationSystem
+ruft zunächst das MainWindow auf. Dort sind verschiedene Buttons zu finden, die jeweils einen ActionListener haben. Wird ein
+Button geklickt, wird der entsprechende ActionListener ausgeführt, also in der Regel ein neues Fenster aufgerufen. Der Button
+Exit beendet die Anwendung, List Occupied und List Free zeigen die belegten und freien Räume in einem bestimmten Zeitintervall an.
+Bevor die Räume aufgelistet werden können, wird das entsprechende Zeitfenster in einem eigenen Fenster abgefragt. Bei einer fehlerhaften
+Eingabe öffnet sich ein neues Fenster, in welchem der aufgetretene Fehler beschrieben wird. Nachdem dieses Fenster geschlossen wurde,
+kann die Eingabe korrigiert werden.
+Bei einem Klick auf einen Raum im MainWindow öffnet sich die Übersicht für einen Raum. Über die entsprechenden Buttons kann das Zimmer nun reserviert
+werden. Zum Löschen muss der erste Tag des reservierten Zeitraums angegeben werden.
+Die Fenster können stets über den Button Close geschlossen werden.
 
-Main Window:
-Der Button Exit schließt die Anwendung.
+
+Genutzte IDE:
+
+IntelliJ IDEA 2023.1 (Community Edition)
+Build \#IC-231.8109.175, built on March 28, 2023
+Runtime version: 17.0.6+10-b829.5 amd64
+VM: OpenJDK 64-Bit Server VM by JetBrains s.r.o.
+Windows 11.0
+GC: G1 Young Generation, G1 Old Generation
+Memory: 2018M
+Cores: 8
+
+Kotlin: 231-1.8.20-IJ8109.175
+
+
+
+Genutzte Java-Version:
+
+openjdk version "17.0.6" 2023-01-17 LTS
+OpenJDK Runtime Environment Microsoft-7209853 (build 17.0.6+10-LTS)
+OpenJDK 64-Bit Server VM Microsoft-7209853 (build 17.0.6+10-LTS, mixed mode, sharing)
