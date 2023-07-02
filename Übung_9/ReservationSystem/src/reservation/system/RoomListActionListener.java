@@ -7,11 +7,12 @@ import java.awt.event.ActionListener;
 /** ActionListener to open a RoomList window. */
 public class RoomListActionListener implements ActionListener {
     final int ROOM_LIST_INDEX;
+    final String rooms[]={};
     RoomListActionListener(int index) {
         ROOM_LIST_INDEX = index;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        RoomList roomList = new RoomList(ROOM_LIST_INDEX);
+        RoomList roomList = new RoomList(ROOM_LIST_INDEX,rooms);
     }
 }

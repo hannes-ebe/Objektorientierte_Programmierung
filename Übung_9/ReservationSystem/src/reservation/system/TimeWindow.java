@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 
 /** Class to create a window to enter a date range */
@@ -11,13 +12,12 @@ public class TimeWindow extends JFrame {
     /** Constructor
      * @param index index to distinguish between free rooms (0), occupied rooms (1) or reserving a room (2)
      */
-    TimeWindow(Reservations reservations, int index) {
+    TimeWindow(Reservations reservations, int index, int roomnumber) {
         JFrame timeWindow = new JFrame("Enter Time Period");
         timeWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         timeWindow.setPreferredSize(new Dimension(500, 120));
         timeWindow.setResizable(false);
         timeWindow.setLayout(new GridLayout(4, 4));
-
         // first three indices are the start date
         // last three indices are the end date
         Component[] components = new Component[6];
@@ -44,27 +44,36 @@ public class TimeWindow extends JFrame {
         timeWindow.add(new JLabel());
 
         // Reservations reservations =
-
+        JButton close = new JButton("Close");
         if (index == 0) {
             JButton button = new JButton("View");
             button.addActionListener(new FindFreeRoomsActionListener(reservations,components));
             timeWindow.add(button);
         } else if (index == 1) {
             JButton button = new JButton("View");
-            button.addActionListener(new RoomListActionListener(index));
+            button.addActionListener(new FindOccupiedRoomsActionListener(reservations,components));
             timeWindow.add(button);
         } else {
             JButton button = new JButton("Reserve");
+            button.addActionListener(new ReservationActionListener(reservations,components,roomnumber));
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    timeWindow.dispose();
+                }
+            });
             timeWindow.add(button);
+            close.addActionListener(new RoomOverviewActionListener(roomnumber,reservations));
         }
 
-        JButton close = new JButton("Close");
+
         close.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 timeWindow.dispose();
             }
         });
+
         timeWindow.add(close);
 
         timeWindow.pack();
@@ -72,4 +81,5 @@ public class TimeWindow extends JFrame {
 
         timeWindow.setVisible(true);
     }
+
 }

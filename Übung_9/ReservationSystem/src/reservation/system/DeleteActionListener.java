@@ -7,41 +7,43 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.List;
 
-public class FindFreeRoomsActionListener implements ActionListener {
+
+
+public class DeleteActionListener implements ActionListener {
     private final Reservations controller;
     private final Component[] components;
-
+    private final int roomnumber;
     /**
      * Es wird das Reservations-Objekt übergeben, welches ursprünglich in ReservationSystem instanziiert wurde
      * und es werden die Formularfelder benötigt. Hier als Array übergeben. Das geht natürlich auf für jedes
      * Feld einzeln.
      */
-    public FindFreeRoomsActionListener(Reservations controller, Component[] components) {
+    public DeleteActionListener(Reservations controller, Component[] components, int roomnumber) {
         this.controller = controller;
         this.components = components;
+        this.roomnumber=roomnumber;
     }
     /** creating a DateRange-Object from components */
-    DateRange createDateRange(final Component[] components) {
+    LocalDate createDate(final Component[] components) {
         final LocalDate firstDate = LocalDate.of(
                 Integer.parseInt(((JTextField) components[2]).getText()),
                 Integer.parseInt(((JTextField) components[1]).getText()),
                 Integer.parseInt(((JTextField) components[0]).getText()));
-        final LocalDate lastDate = LocalDate.of(
-                Integer.parseInt(((JTextField) components[5]).getText()),
-                Integer.parseInt(((JTextField) components[4]).getText()),
-                Integer.parseInt(((JTextField) components[3]).getText()));
-        return new DateRange(firstDate, lastDate);
+        return firstDate;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        DateRange dateRange = createDateRange(this.components);
-        List<Integer> freeRooms = controller.listFreeRooms(dateRange);
-        // TODO ListView öffnen mit der Liste der freien Räume
-        String rooms[]=new String[freeRooms.size()] ;
-        for(int i=0;i<freeRooms.size();i++){
-            rooms[i]="Room:"+freeRooms.get(i);
+        LocalDate date= createDate(this.components);
+        try{
+            controller.freeRoom(roomnumber,date);
+            RoomOverview roomOverview=new RoomOverview(controller,roomnumber);
         }
-        RoomList roomList = new RoomList(0,rooms);
+        catch (Exception ex){
+            System.out.println(ex);
+        }
+
     }
 
 }
+
+

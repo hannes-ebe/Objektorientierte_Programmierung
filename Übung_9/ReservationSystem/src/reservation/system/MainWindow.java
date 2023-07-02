@@ -24,9 +24,9 @@ public class MainWindow extends JFrame {
         menuButtons.setLayout(new FlowLayout());
 
         JButton listFree = new JButton("List Free");
-        listFree.addActionListener(new TimeWindowActionListener(reservations,0));
+        listFree.addActionListener(new TimeWindowActionListener(reservations,0,-1));
         JButton listOccupied = new JButton("List Occupied");
-        listOccupied.addActionListener(new TimeWindowActionListener(reservations,1));
+        listOccupied.addActionListener(new TimeWindowActionListener(reservations,1,-1));
         JButton exit = new JButton("Exit");
         exit.addActionListener(new ActionListener() {
             @Override
@@ -43,7 +43,7 @@ public class MainWindow extends JFrame {
         roomButtons.setLayout(new GridLayout(ROOM_ROWS,ROOM_COLUMNS));
         for (int i = 0; i < NUMBER_OF_ROOMS; i++) {
             JButton newRoom = new JButton("Room " + i);
-            newRoom.addActionListener(new RoomOverviewActionListener(i));
+            newRoom.addActionListener(new RoomOverviewActionListener(i,reservations));
             roomButtons.add(newRoom);
         }
 
