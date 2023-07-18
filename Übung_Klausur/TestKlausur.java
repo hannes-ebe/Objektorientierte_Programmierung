@@ -36,8 +36,15 @@ public class TestKlausur {
         // System.out.println(Float.MIN_VALUE);
         // System.out.println(Integer.MIN_VALUE);
         // System.out.println(i++ * 4 + ++i * 2.0);
-        // System.out.println((double) (int) 4.1 * 2);
+        // System.out.println((double) (int) 4.6 * 2);
+        // System.out.println((int) 4.9);
 
+        int a = 1;
+        int b = 2;
+        System.out.println(a + " " + b);
+        a = b;
+        b = 3;
+        System.out.println(a + " " + b);
 
         /*
         int[][] a;
@@ -57,11 +64,13 @@ public class TestKlausur {
         // PizzaTopping topping = PizzaTopping.CHEESE;
         // PizzaTopping topping = PizzaTopping.FUNGI;
 
+        /*
         String newString;
         String newString2 = "Hello";
         newString = newString2;
         System.out.println(newString);
         System.out.println(newString2);
+        */
 
     }
     enum PizzaTopping { ONIONS, PEPPERS, FUNGI}
